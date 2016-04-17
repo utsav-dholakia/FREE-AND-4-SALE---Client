@@ -1,4 +1,4 @@
-package edu.utdallas.cs6314.jsp.servlet.mvc.rest;
+package jsp.servlet.mvc.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,7 +52,7 @@ public class SessionControllerServlet extends HttpServlet {
 		try {
 			 
 			Client client = Client.create();
-			WebResource webResource = client.resource("https://localhost:8443/FreeN4Sale/loginservices/checkuservalidity");
+			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/loginservices/checkuservalidity");
 			MultivaluedMap formData = new MultivaluedMapImpl();
 			formData.add("username", name);
 			formData.add("password", password);
