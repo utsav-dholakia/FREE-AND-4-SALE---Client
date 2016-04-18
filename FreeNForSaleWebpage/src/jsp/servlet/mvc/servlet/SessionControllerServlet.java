@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 /**
  * Servlet implementation class SessionControllerServlet
@@ -50,21 +50,25 @@ public class SessionControllerServlet extends HttpServlet {
 
 		Boolean status = false;
 		try {
-			 
+			
 			Client client = Client.create();
-			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/loginservices/checkuservalidity");
-			MultivaluedMap formData = new MultivaluedMapImpl();
+			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/loginservices/checkuservalidity");
+			/*MultivaluedMap formData = new MultivaluedMapImpl();
 			formData.add("username", name);
-			formData.add("password", password);
+			formData.add("password", password);*/
+			//webResource.header("secretKey", "1234567890");
 			ClientResponse restResponse = webResource
-			    .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-			    .post(ClientResponse.class, formData);
+			    .type(MediaType.APPLICATION_JSON)
+			    .post(ClientResponse.class, bean);
+			
 			
 			if (restResponse.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
 			}
  
+			
 			String statusString = restResponse.getEntity(String.class);
+			System.out.println(statusString);
 			status = Boolean.parseBoolean(statusString);
 		} catch (Exception e) {
 			e.printStackTrace();
