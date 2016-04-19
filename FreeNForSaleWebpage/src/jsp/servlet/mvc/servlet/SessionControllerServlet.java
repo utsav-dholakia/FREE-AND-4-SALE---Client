@@ -66,6 +66,9 @@ public class SessionControllerServlet extends HttpServlet {
  
 			
 			String statusString = restResponse.getEntity(String.class);
+			if(statusString.equals("-1")){
+				status=false;
+			}
 			System.out.println(statusString);
 		} catch (Exception e) {
 			e.printStackTrace();
