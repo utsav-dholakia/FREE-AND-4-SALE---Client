@@ -48,28 +48,25 @@ public class SessionControllerServlet extends HttpServlet {
 		bean.setPassword(password);
 		request.setAttribute("bean",bean);
 
-		Boolean status = false;
+		Boolean status = true;
 		try {
 			
 			Client client = Client.create();
 			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/loginservices/checkuservalidity");
-			/*MultivaluedMap formData = new MultivaluedMapImpl();
-			formData.add("username", name);
-			formData.add("password", password);*/
-			//webResource.header("secretKey", "1234567890");
-			ClientResponse restResponse = webResource
+			
+			ClientResponse restResponse = webResource.header("secretKey", "1234567890")
 			    .type(MediaType.APPLICATION_JSON)
 			    .post(ClientResponse.class, bean);
 			
 			
 			if (restResponse.getStatus() != 200) {
+				status=false;
 				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
 			}
  
 			
 			String statusString = restResponse.getEntity(String.class);
 			System.out.println(statusString);
-			status = Boolean.parseBoolean(statusString);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
