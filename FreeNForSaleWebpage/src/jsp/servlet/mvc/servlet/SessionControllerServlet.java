@@ -50,7 +50,7 @@ public class SessionControllerServlet extends HttpServlet {
 		try {
 			
 			Client client = Client.create();
-			WebResource webResource = client.resource("https://localhost:8843/FreeNForSaleServices/rest/loginservices/checkuservalidity");
+			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/loginservices/checkuservalidity");
 			
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")
 			    .type(MediaType.APPLICATION_JSON)
