@@ -15,8 +15,6 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 /**
  * Servlet implementation class SessionControllerServlet
@@ -52,7 +50,7 @@ public class SessionControllerServlet extends HttpServlet {
 		try {
 			
 			Client client = Client.create();
-			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/loginservices/checkuservalidity");
+			WebResource webResource = client.resource("https://localhost:8843/FreeNForSaleServices/rest/loginservices/checkuservalidity");
 			
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")
 			    .type(MediaType.APPLICATION_JSON)
@@ -71,6 +69,7 @@ public class SessionControllerServlet extends HttpServlet {
 			}
 			System.out.println(statusString);
 		} catch (Exception e) {
+			status= false;
 			e.printStackTrace();
 		}
 		
