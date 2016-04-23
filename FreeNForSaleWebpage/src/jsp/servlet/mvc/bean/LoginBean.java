@@ -1,4 +1,4 @@
-package jsp.servlet.mvc.servlet;
+package jsp.servlet.mvc.bean;
 
 public class LoginBean {
 

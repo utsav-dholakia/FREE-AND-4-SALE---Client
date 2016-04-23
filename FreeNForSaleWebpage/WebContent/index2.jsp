@@ -121,41 +121,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<li class="active"><a href="index.html" class="act">Home</a></li>
 							<!-- Mega Menu -->
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">Women <b class="caret"></b></a>
+								data-toggle="dropdown">Categories <b class="caret"></b></a>
 								<ul class="dropdown-menu multi">
 									<div class="row">
 										<div class="col-sm-4">
 											<ul class="multi-column-dropdown">
-												<h6>Submenu1</h6>
+												<h6>Heavy Products</h6>
 
-												<li><a href="products.html">Accessories</a></li>
-												<li><a href="products.html">Bags</a></li>
-												<li><a href="products.html">Caps & Hats</a></li>
-												<li><a href="products.html">Hoodies & Sweatshirts</a></li>
-
+												<li><a href="products.html">Furniture</a></li>
+												<li><a href="products.html">Cars</a></li>
+												<li><a href="products.html">Electronics</a></li>
 											</ul>
 										</div>
 										<div class="col-sm-4">
 											<ul class="multi-column-dropdown">
-												<h6>Submenu2</h6>
-												<li><a href="products.html">Jackets & Coats</a></li>
-												<li><a href="products.html">Jeans</a></li>
+												<h6>Consumer Goods</h6>
+												<li><a href="products.html">Clothing,Shoes & Jewelry</a></li>
+												<li><a href="products.html">Cosmetics</a></li>
 												<li><a href="products.html">Jewellery</a></li>
-												<li><a href="products.html">Jumpers & Cardigans</a></li>
-												<li><a href="products.html">Leather Jackets</a></li>
-												<li><a href="products.html">Long Sleeve T-Shirts</a></li>
-
 											</ul>
 										</div>
 										<div class="col-sm-4">
 											<ul class="multi-column-dropdown">
-												<h6>Submenu3</h6>
-												<li><a href="products.html">Shirts</a></li>
-												<li><a href="products.html">Shoes, Boots & Trainers</a></li>
-												<li><a href="products.html">Sunglasses</a></li>
-												<li><a href="products.html">Sweatpants</a></li>
-												<li><a href="products.html">Swimwear</a></li>
-												<li><a href="products.html">Trousers & Chinos</a></li>
+												<h6>Small Products</h6>
+												<li><a href="products.html">Books</a></li>
+												<li><a href="products.html">Promotions</a></li>
+												<li><a href="products.html">Other</a></li>
+											
 
 											</ul>
 										</div>
@@ -173,7 +165,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="clearfix"></div>
 									</div>
 								</ul></li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
+							<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Men <b class="caret"></b></a>
 								<ul class="dropdown-menu multi multi1">
 									<div class="row">
@@ -227,7 +219,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="clearfix"></div>
 									</div>
 								</ul></li>
-
+ -->
 							<li><a href="codes.html"> Codes</a></li>
 							<li><a href="contact.html">Contact Us</a></li>
 						</ul>
@@ -247,7 +239,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="banner-right">
 			<ul id="flexiselDemo2">
 				<li><div class="banner-grid">
-						<h2>Featured Products</h2>
+						<h2>Furniture</h2>
 						<div class="wome">
 							<a href="single.html"><img class="img-responsive"
 								src="images/bi1.jpg" alt="" /> </a>
