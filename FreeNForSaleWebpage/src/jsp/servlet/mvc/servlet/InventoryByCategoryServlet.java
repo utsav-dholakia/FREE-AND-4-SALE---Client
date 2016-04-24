@@ -19,36 +19,47 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
 import jsp.servlet.mvc.bean.InventoryBean;
+import jsp.servlet.mvc.bean.LoginBean;
 
 /**
  * Servlet implementation class SessionControllerServlet
  */
-@WebServlet("/InventoryControllerServlet")
-public class InventoryControllerServlet extends HttpServlet {
+@WebServlet("/InventoryByCategoryServlet")
+public class InventoryByCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InventoryControllerServlet() {
+    public InventoryByCategoryServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	// TODO Auto-generated method stub
     	//super.doGet(request, response);
-		System.out.println("Calling Inventory Service");
+		System.out.println("Calling Inventory by category Id Service");
 		Boolean status = true;
+		
+		String categoryName = request.getParameter("name");
+		//String password=request.getParameter("password");
+		System.out.println("input param : " + categoryName);
+		InventoryBean bean=new InventoryBean();
+		bean.setCategoryName(categoryName);
+		bean.setCategoryId(1);
+		//bean.setPassword(password);
+		request.setAttribute("bean",bean);
+
 		try {
 			
 			Client client = Client.create();
-			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/InventoryServices/InventoryForHomePage");
+			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/InventoryServices/InventoryByCategoryId");
 			
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")
 			    .accept(MediaType.APPLICATION_JSON)
-			    .get(ClientResponse.class);
+			    .post(ClientResponse.class,bean);
 			
 			
 			if (restResponse.getStatus() != 200) {
@@ -56,8 +67,10 @@ public class InventoryControllerServlet extends HttpServlet {
 				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
 			}
  
-			Map<Integer,ArrayList<InventoryBean>> iBeans= restResponse.getEntity(new GenericType<Map<Integer,ArrayList<InventoryBean>>>(){});
-			System.out.println(iBeans.get(1).get(0).getCategoryName());
+			ArrayList<InventoryBean> iBeans= restResponse.getEntity(new GenericType<ArrayList<InventoryBean>>(){});
+			System.out.println("iBeans size:" + iBeans.size());
+			for(int i = 0 ; i < iBeans.size(); i++)
+				System.out.println(iBeans.get(i).getInventoryName());
 			
 		} catch (Exception e) {
 			status= false;
@@ -66,8 +79,7 @@ public class InventoryControllerServlet extends HttpServlet {
 		
 		if(status){
 			System.out.println("status = true");
-			request.setAttribute("USER", "-1");
-			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("products.jsp");
 			rd.forward(request, response);
 			return;
 		}

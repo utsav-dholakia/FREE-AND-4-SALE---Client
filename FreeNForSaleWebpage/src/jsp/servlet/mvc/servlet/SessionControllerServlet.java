@@ -24,7 +24,7 @@ import jsp.servlet.mvc.bean.LoginBean;
 @WebServlet("/SessionControllerServlet")
 public class SessionControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private static LoginBean bean;   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,7 +43,7 @@ public class SessionControllerServlet extends HttpServlet {
 		String name=request.getParameter("name");
 		String password=request.getParameter("password");
 		
-		LoginBean bean=new LoginBean();
+		bean=new LoginBean();
 		bean.setName(name);
 		bean.setPassword(password);
 		request.setAttribute("bean",bean);
@@ -78,13 +78,27 @@ public class SessionControllerServlet extends HttpServlet {
 		if(status){
 			HttpSession session = request.getSession();
 			session.setAttribute("USER", name);
-			RequestDispatcher rd=request.getRequestDispatcher("welcome-page.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
 			rd.forward(request, response);
 		}
-		else{
+		else
+		{
+			request.setAttribute("USER", "-1");
 			RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
 			rd.forward(request, response);
 		}
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		bean=new LoginBean();
+		HttpSession session = request.getSession();
+		session.invalidate();
+		RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
+		rd.forward(request, response);
 	}
 
 }

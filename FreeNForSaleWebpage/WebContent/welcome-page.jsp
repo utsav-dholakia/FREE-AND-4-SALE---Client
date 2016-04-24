@@ -25,6 +25,12 @@
 	    	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
 	    	dispatcher.forward(request,response);
 		}
+		else
+		{
+			String address = "/index2.jsp";
+	    	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+	    	dispatcher.forward(request,response);
+		}
 		out.print("Welcome, "+bean.getName());
 	}
 %>

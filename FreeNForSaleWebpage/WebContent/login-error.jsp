@@ -7,7 +7,12 @@
 <title>Login error page</title>
 </head>
 <body>
-<p>Sorry! username or password error</p>
-<%@ include file="index.jsp" %>
+<script>
+	$(document).ready(function()
+	{
+		$("<p>Sorry, USERNAME / PASSWORD mismatch found</p>").insertBefore(".form");
+	});
+</script>
+<%@ include file="login.jsp" %>
 </body>
 </html>

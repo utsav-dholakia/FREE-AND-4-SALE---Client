@@ -78,14 +78,14 @@ ul,label{
     font-family: 'Lato', sans-serif;
     font-weight: 700;
 }
-.logo-nav-left h1 a{
+.logo-nav-left h2 a{
 	
 	    color:#01CFCF;
     text-decoration: none;
     
 }
-.logo-nav-left h1 a span{
-    color: #000;
+.logo-nav-left h2 a span{
+    color: #FFF;
 	font-weight: 300;
 }
 
@@ -164,7 +164,9 @@ ul.multi-column-dropdown h6 {
     padding-bottom: 1em;
     border-bottom: 1px solid #E4E4E4;
     text-transform: capitalize;
+	white-space:pre;    
 }
+
 .multi-column-dropdown li {
     list-style-type: none;
     margin: 7px 0;
@@ -174,14 +176,16 @@ ul.multi-column-dropdown h6 {
     clear: both;
     line-height: 1.428571429;
     color: #999 !important;
-    white-space: normal;
+    white-space: pre;
 	font-weight:500 !important;
 }
 .multi-column-dropdown li a:hover {
+	white-space:pre;
     color: #FF7000 !important;
 }
 .dropdown-menu.multi {
-    min-width: 700px;
+    /*min-width: 700px;*/
+    width: auto;
     padding: 30px 30px;
 }
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
