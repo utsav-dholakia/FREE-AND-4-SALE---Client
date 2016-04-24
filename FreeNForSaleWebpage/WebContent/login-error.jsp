@@ -13,7 +13,6 @@ $(window).load(function(){
 	$(document).ready(function(){
 		var appendString = "<div class=\"login-do1 removeIfLoggedIn\" data-wow-delay=\".5s\">" +
 							"<p>Sorry, USERNAME / PASSWORD mismatch found</p></div>";
-		console.log("appending string before form : " + appendString);
 		$(appendString).insertBefore(".form");
 	});
 });

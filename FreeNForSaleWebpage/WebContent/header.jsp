@@ -96,7 +96,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		console.log("name received = " + name);
 		$(document).ready(function(){
 			$(".toggleWhenLoggedIn").hide();
-			$("<li>Welcome "+name+"!</li>").insertBefore("#appendUserNameBeforeThis");
+			$("#appendUserNameHere").text("Welcome  " + name + "!");
 			$(".toggleWhenLoggedOut").show();
 			$("#profileUserName").text(name);
 			$(".removeIfLoggedIn").remove();
@@ -113,15 +113,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	}
 	
 </script>				
-				<div class="header-right animated wow fadeInRight"
+				<div class="header-right animated wow fadeInRight col-sm-3"
 				data-wow-delay=".5s">
-				<div class="header-right1 ">
+				<div class="header-right1">
 					<ul id="appendUserName">
 						<li class="toggleWhenLoggedIn"><i class="glyphicon glyphicon-log-in"></i>
 						<a class="loginLink" href="login.jsp">Login</a></li>
 						<li class="toggleWhenLoggedIn"><i class="glyphicon glyphicon-book"></i>
 						<a class="loginLink" href="register.jsp">Register</a></li>
-						<li id="appendUserNameBeforeThis"><a href="contact.jsp">Contact Us</a></li>
+						<li id="appendUserNameHere"></li>
 					</ul>
 				</div>
 				</div>
@@ -133,7 +133,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<nav class="navbar navbar-default">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header nav_2">
+					<div class="navbar-header nav_2" style="margin-top:10px">
 						<input class="form-control" id="search" placeholder="Search Product" type="text" size="50"></input>
 					</div>
 					
@@ -148,28 +148,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	});
 </script>
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-						<ul class="nav navbar-nav">
+						<ul class="nav navbar-nav col-sm-3">
 							<li><a href="index2.jsp" class="act">Home</a></li>
 							<!-- Mega Menu -->
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Categories <b class="caret"></b></a>
-								<ul class="dropdown-menu multi">
+								<ul class="dropdown-menu multi" style="left:-400%;width:600px;">
 									<div class="row">
 										<div class="col-sm-4">
 											<ul class="multi-column-dropdown">
 												<h6>Heavy Products</h6>
-
 												<li><a href="javascript:void(0)" class="category_name">Furniture</a></li>
 												<li><a href="javascript:void(0)" class="category_name">Cars</a></li>
 												<li><a href="javascript:void(0)" class="category_name">Electronics</a></li>
-											</ul>
-										</div>
-										<div class="col-sm-4">
-											<ul class="multi-column-dropdown">
-												<h6>Consumer Goods</h6>
-												<li><a href="javascript:void(0)" class="category_name">Clothing,Shoes & Jewelry</a></li>
-												<li><a href="javascript:void(0)" class="category_name">Cosmetics</a></li>
-												<li><a href="javascript:void(0)" class="category_name">Jewellery</a></li>
 											</ul>
 										</div>
 										<div class="col-sm-4">
@@ -180,17 +171,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<li><a href="javascript:void(0)" class="category_name">Other</a></li>
 											</ul>
 										</div>
+										<div class="col-sm-4">
+											<ul class="multi-column-dropdown">
+												<h6>Consumer Goods</h6>
+												<li><a href="javascript:void(0)" class="category_name">Clothing,Shoes & Jewelry</a></li>
+												<li><a href="javascript:void(0)" class="category_name">Cosmetics</a></li>
+												<li><a href="javascript:void(0)" class="category_name">Jewellery</a></li>
+											</ul>
+										</div>
 										<div class="clearfix"></div>
 									</div>
 									</ul></li>
 									<li class="dropdown toggleWhenLoggedOut">
 										<a href="#" class="dropdown-toggle"
-										data-toggle="dropdown"><label id="profileUserName"></label><b class="caret"></b></a>
-											<ul class="dropdown-menu multi">
+										data-toggle="dropdown" id="profileUserName"></a>
+											<ul class="dropdown-menu multi" style="left:-130%">
 												<div class="row">
-													<div class="col-sm-4">
+													<div class="col-sm-2">
 														<ul class="multi-column-dropdown">
 															<li><a href="profile.jsp">User Profile</a></li>
+															<li><a href="checkout.jsp">Cart</a></li>
 															<li><a href="history.jsp">Shopping History</a></li>
 															<li><a href="review.jsp">Review</a></li>
 															<li><a href="index2.jsp" id="toggleLoggedInState">Sign Out</a></li>
@@ -199,12 +199,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 													<div class="clearfix"></div>
 												</div>
 											</ul>
-									</li>
-									<li class="toggleWhenLoggedOut">
-										<a href="checkout.jsp">
-										Cart<img src="images/cart.png" alt="Cart" />
-										</a>
-										<div class="clearfix"></div>
 									</li>
 						</ul>
 					</div>
