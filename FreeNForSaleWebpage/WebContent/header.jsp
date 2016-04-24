@@ -80,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	if(session != null)		
 	{
 		name=(String)session.getAttribute("USER");
-		LoginBean bean=(LoginBean)request.getAttribute("bean");
+		LoginBean bean=(LoginBean)request.getAttribute("loginbean");
 		out.println("Session is set");
 	}
 	else if( session == null || (request.getAttribute("USER") == "-1"))
@@ -99,6 +99,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			$("<li>Welcome "+name+"!</li>").insertBefore("#appendUserNameBeforeThis");
 			$(".toggleWhenLoggedOut").show();
 			$("#profileUserName").text(name);
+			$(".removeIfLoggedIn").remove();
 		});	
 	}
 	else
@@ -136,30 +137,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<input class="form-control" id="search" placeholder="Search Product" type="text" size="50"></input>
 					</div>
 					
-					<script>
-					$(document).ready(function(){
-						$(".category_name").on("click",function(){
-							  var value = $(this).text();
-								 var sendData = {};
-								 sendData.name = value;
-								 alert("button clicked");
-								 console.log("sendData : " + sendData.name);
-								 $.ajax({
-									  type: "POST",
-									  url: "https://localhost:9443/FreeNForSaleWebpage/InventoryByCategoryServlet",
-									  data: JSON.stringify(sendData)
-									});
-						 });
-						
-						$("#toggleLoggedInState").on("click",function(){
-							$.ajax({
-								  type: "GET",
-								  url: "https://localhost:9443/FreeNForSaleWebpage/SessionControllerServlet"
-								});
-						});
-					});
-					
-					</script>
+<script>
+	$(document).ready(function(){
+		$("#toggleLoggedInState").on("click",function(){
+			$.ajax({
+				  type: "GET",
+				  url: "https://localhost:9443/FreeNForSaleWebpage/SessionControllerServlet"
+				});
+		});
+	});
+</script>
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav">
 							<li><a href="index2.jsp" class="act">Home</a></li>
@@ -196,17 +183,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="clearfix"></div>
 									</div>
 									</ul></li>
-									<!--  <div class="row-top">
-										<div class="col-sm-6 row1">
-											<a href="products.html"><img src="images/me.jpg" alt=""
-												class="img-responsive"></a>
-										</div>
-										<div class=" col-sm-6 row2">
-											<a href="products.html"><img src="images/me1.jpg" alt=""
-												class="img-responsive"></a>
-										</div>
-										<div class="clearfix"></div>
-									</div>  -->
 									<li class="dropdown toggleWhenLoggedOut">
 										<a href="#" class="dropdown-toggle"
 										data-toggle="dropdown"><label id="profileUserName"></label><b class="caret"></b></a>

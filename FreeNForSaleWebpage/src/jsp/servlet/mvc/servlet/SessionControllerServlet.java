@@ -38,7 +38,6 @@ public class SessionControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		PrintWriter out=response.getWriter();
 		
 		String name=request.getParameter("name");
 		String password=request.getParameter("password");
@@ -46,7 +45,7 @@ public class SessionControllerServlet extends HttpServlet {
 		bean=new LoginBean();
 		bean.setName(name);
 		bean.setPassword(password);
-		request.setAttribute("bean",bean);
+		request.setAttribute("loginbean",bean);
 
 		Boolean status = true;
 		try {
@@ -59,23 +58,28 @@ public class SessionControllerServlet extends HttpServlet {
 			    .post(ClientResponse.class, bean);
 			
 			
-			if (restResponse.getStatus() != 200) {
+			/*if (restResponse.getStatus() != 200) {
 				status=false;
 				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
-			}
+			}*/
  
-			
-			String statusString = restResponse.getEntity(String.class);
-			if(statusString.equals("-1")){
+			if(restResponse.getStatus() == 400)
+			{
+				String statusString = restResponse.getEntity(String.class);
 				status=false;
+				if(statusString.equals("-1"))
+				{
+					System.out.println(statusString);
+				}
 			}
-			System.out.println(statusString);
+			
 		} catch (Exception e) {
 			status= false;
 			e.printStackTrace();
 		}
 		
 		if(status){
+			System.out.println("redirecting to index2.jsp");
 			HttpSession session = request.getSession();
 			session.setAttribute("USER", name);
 			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
@@ -83,6 +87,7 @@ public class SessionControllerServlet extends HttpServlet {
 		}
 		else
 		{
+			System.out.println("redirecting to login-error.jsp");
 			request.setAttribute("USER", "-1");
 			RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
 			rd.forward(request, response);
