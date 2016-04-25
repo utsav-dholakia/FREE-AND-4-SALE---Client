@@ -29,6 +29,7 @@ public class RegisterControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static RegisterBean bean; 
     private static LoginBean loginBean;
+    private static String statusString;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -41,6 +42,7 @@ public class RegisterControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("RegisterControllerServlet Post call...");
 		response.setContentType("text/html");
 		
 		bean=new RegisterBean();
@@ -60,8 +62,7 @@ public class RegisterControllerServlet extends HttpServlet {
 			String day=request.getParameter("day");
 			try {
 				String bdate = year+ " "+ month + " " + day;
-				System.out.println("bdate :" + bdate);
-			    SimpleDateFormat df = new SimpleDateFormat("yyyy dd MM");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy dd MM");
 				Date date = df.parse(bdate);
 				long epoch = date.getTime();
 				bean.setBdate(epoch);
@@ -116,17 +117,16 @@ public class RegisterControllerServlet extends HttpServlet {
 			    .post(ClientResponse.class, bean);
 			
 			
-			if (restResponse.getStatus() != 200) {
+			if(restResponse.getStatus() == 400)
+			{
+				statusString = restResponse.getEntity(String.class);
 				status=false;
-				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
+				if(statusString.equals("-1"))
+				{
+					System.out.println(statusString);
+				}
 			}
  
-			
-			String statusString = restResponse.getEntity(String.class);
-			if(statusString.equals("-1")){
-				status=false;
-			}
-			System.out.println(statusString);
 		} catch (Exception e) {
 			status= false;
 			e.printStackTrace();
@@ -135,8 +135,9 @@ public class RegisterControllerServlet extends HttpServlet {
 		if(status)
 		{
 			HttpSession session = request.getSession();
+			session.setAttribute("UID", statusString);
 			session.setAttribute("USER", name);
-			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("InventoryControllerServlet");
 			rd.forward(request, response);
 		}
 		else

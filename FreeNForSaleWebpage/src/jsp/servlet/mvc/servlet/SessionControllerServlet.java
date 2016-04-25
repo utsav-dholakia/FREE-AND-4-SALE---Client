@@ -24,7 +24,8 @@ import jsp.servlet.mvc.bean.LoginBean;
 @WebServlet("/SessionControllerServlet")
 public class SessionControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static LoginBean bean;   
+    private static LoginBean bean;  
+    private static String statusString;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,6 +38,7 @@ public class SessionControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("SessionControllerServlet Post call...");
 		response.setContentType("text/html");
 		
 		String name=request.getParameter("name");
@@ -57,15 +59,9 @@ public class SessionControllerServlet extends HttpServlet {
 			    .type(MediaType.APPLICATION_JSON)
 			    .post(ClientResponse.class, bean);
 			
-			
-			/*if (restResponse.getStatus() != 200) {
-				status=false;
-				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
-			}*/
- 
 			if(restResponse.getStatus() == 400)
 			{
-				String statusString = restResponse.getEntity(String.class);
+				statusString = restResponse.getEntity(String.class);
 				status=false;
 				if(statusString.equals("-1"))
 				{
@@ -73,21 +69,23 @@ public class SessionControllerServlet extends HttpServlet {
 				}
 			}
 			
+			
+			
 		} catch (Exception e) {
 			status= false;
 			e.printStackTrace();
 		}
-		
+	
 		if(status){
-			System.out.println("redirecting to index2.jsp");
 			HttpSession session = request.getSession();
+			session.setAttribute("UID", statusString);
 			session.setAttribute("USER", name);
-			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
+			System.out.println("redirecting to inventorycontroller");
+			RequestDispatcher rd=request.getRequestDispatcher("InventoryControllerServlet");
 			rd.forward(request, response);
 		}
 		else
 		{
-			System.out.println("redirecting to login-error.jsp");
 			request.setAttribute("USER", "-1");
 			RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
 			rd.forward(request, response);
@@ -102,7 +100,7 @@ public class SessionControllerServlet extends HttpServlet {
 		bean=new LoginBean();
 		HttpSession session = request.getSession();
 		session.invalidate();
-		RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("InventoryControllerServlet");
 		rd.forward(request, response);
 	}
 

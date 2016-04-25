@@ -27,7 +27,8 @@ import jsp.servlet.mvc.bean.LoginBean;
 @WebServlet("/InventoryByCategoryServlet")
 public class InventoryByCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private static InventoryBean bean; 
+    private static String statusString;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -38,18 +39,13 @@ public class InventoryByCategoryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	// TODO Auto-generated method stub
-    	//super.doGet(request, response);
-		System.out.println("Calling Inventory by category Id Service");
+    	System.out.println("InventoryByCategoryServlet Post call...");
 		Boolean status = true;
 		
-		String categoryName = request.getParameter("name");
-		//String password=request.getParameter("password");
-		System.out.println("input param : " + categoryName);
-		InventoryBean bean=new InventoryBean();
-		bean.setCategoryName(categoryName);
-		bean.setCategoryId(1);
-		//bean.setPassword(password);
+		String categoryId = request.getParameter("categoryId");
+		System.out.println("input param : " + categoryId);
+		bean=new InventoryBean();
+		bean.setCategoryId(Integer.parseInt(categoryId));
 		request.setAttribute("bean",bean);
 
 		try {
@@ -62,9 +58,14 @@ public class InventoryByCategoryServlet extends HttpServlet {
 			    .post(ClientResponse.class,bean);
 			
 			
-			if (restResponse.getStatus() != 200) {
+			if(restResponse.getStatus() == 400)
+			{
+				statusString = restResponse.getEntity(String.class);
 				status=false;
-				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
+				if(statusString.equals("-1"))
+				{
+					System.out.println(statusString);
+				}
 			}
  
 			ArrayList<InventoryBean> iBeans= restResponse.getEntity(new GenericType<ArrayList<InventoryBean>>(){});
@@ -78,14 +79,12 @@ public class InventoryByCategoryServlet extends HttpServlet {
 		}
 		
 		if(status){
-			System.out.println("status = true");
 			RequestDispatcher rd=request.getRequestDispatcher("products.jsp");
 			rd.forward(request, response);
 			return;
 		}
 		else
 		{
-			System.out.println("status = false");
 			RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
 			rd.forward(request, response);
 			return;
