@@ -6,8 +6,8 @@
 <!--banner-->
 <div class="banner-top">
 	<div class="container">
-		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Products</h2>
-		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index2.jsp">Home</a><label>/</label>Products</h3>
+		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">PRODUCTS</h2>
+		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="javascript:void(0)" id="gotoHomePage">Home</a><label>/</label>Search Results</h3>
 		<div class="clearfix"> </div>
 	</div>
 </div>

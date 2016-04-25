@@ -55,26 +55,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					data-wow-delay=".5s">
 					<div class="navbar-brand logo-nav-left ">
 						<h2 class="animated wow pulse" data-wow-delay=".5s">
-							<a href="index2.jsp">Free<span> N For Sale</span></a>
+							<a href="javascript:void(0)" class="gotoHomePage">Free<span> N For Sale</span></a>
 						</h2>
 					</div>
 					
 				</div>
-<script>
-	$(document).ready(function(){
-		$(".category_name").on("click",function(){
-			var value = $(this).text();
-			var sendData = {};
-			sendData.name = value;
-			console.log("sendData : " + sendData.name);
-			$.ajax({
-				type: "POST",
-				url: "https://localhost:9443/FreeNForSaleWebpage/InventoryByCategoryServlet",
-				data: JSON.stringify(sendData)
-			});
-		});
-	});
-</script>
 <% 
 	String name = null;
 	if(session != null)		
@@ -111,6 +96,59 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		});
 		});
 	}
+	$(document).ready(function(){
+		$('#search').keypress(function(event){
+		    var keycode = (event.keyCode ? event.keyCode : event.which);
+		    if(keycode == '13'){
+		    	alert("Enter pressed");      
+		    }
+		});
+		$("#searchbutton").click(function(){
+			alert("Enter pressed");
+		});
+		$(".categoryName").on("click",function(){
+			var value = $(this).text();
+			
+			if(value == "Furniture")
+				value = 1;
+			else if(value == "Clothing,Shoes & Jewelry")
+				value = 2;
+			else if(value == "Books")
+				value = 3;
+			else if(value == "Cars")
+				value = 4;
+			else if(value == "Electronics")
+				value = 5;
+			else if(value == "Promotions")
+				value = 6;
+			else if(value == "Cosmetics")
+				value = 7;
+			else if(value == "Other")
+				value = 8;
+			
+			var sendData = {};
+			sendData.categoryId = value;
+			console.log("sendData : " + sendData.categoryId);
+			$.ajax({
+				type: "POST",
+				url: "https://localhost:9443/FreeNForSaleWebpage/InventoryByCategoryServlet",
+				data: JSON.stringify(sendData)
+			});
+		});
+		$(".gotoHomePage").on("click",function(){
+			$.ajax({
+				type:  "GET",
+				url: "https://localhost:9443/FreeNForSaleWebpage/InventoryControllerServlet"
+			});
+		});
+		$("#toggleLoggedInState").on("click",function(){
+			$.ajax({
+				 type: "GET",
+				 url: "https://localhost:9443/FreeNForSaleWebpage/SessionControllerServlet"
+			});
+		});
+	});
+	
 	
 </script>				
 				<div class="header-right animated wow fadeInRight col-sm-3"
@@ -130,26 +168,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		<div class="container">
 			<div class="logo-nav">
-
 				<nav class="navbar navbar-default">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header nav_2" style="margin-top:10px">
-						<input class="form-control" id="search" placeholder="Search Product" type="text" size="50"></input>
+					<div class="navbar-header nav_2" style="margin-top:10px;">
+						<span>
+						<input class="form-inline" id="search" placeholder="Search Product" type="text" size="50"></input>
+						<input type="button" class="form-inline btn btn-success" id="searchbutton" value="Search"/>
+						</span>
 					</div>
 					
-<script>
-	$(document).ready(function(){
-		$("#toggleLoggedInState").on("click",function(){
-			$.ajax({
-				  type: "GET",
-				  url: "https://localhost:9443/FreeNForSaleWebpage/SessionControllerServlet"
-				});
-		});
-	});
-</script>
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav col-sm-3">
-							<li><a href="index2.jsp" class="act">Home</a></li>
+							<li><a href="javascript:void(0)" class="gotoHomePage">Home</a></li>
 							<!-- Mega Menu -->
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Categories <b class="caret"></b></a>
@@ -158,25 +188,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="col-sm-4">
 											<ul class="multi-column-dropdown">
 												<h6>Heavy Products</h6>
-												<li><a href="javascript:void(0)" class="category_name">Furniture</a></li>
-												<li><a href="javascript:void(0)" class="category_name">Cars</a></li>
-												<li><a href="javascript:void(0)" class="category_name">Electronics</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Furniture</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Cars</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Electronics</a></li>
 											</ul>
 										</div>
 										<div class="col-sm-4">
 											<ul class="multi-column-dropdown">
 												<h6>Small Products</h6>
-												<li><a href="javascript:void(0)" class="category_name">Books</a></li>
-												<li><a href="javascript:void(0)" class="category_name">Promotions</a></li>
-												<li><a href="javascript:void(0)" class="category_name">Other</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Books</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Promotions</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Other</a></li>
 											</ul>
 										</div>
 										<div class="col-sm-4">
 											<ul class="multi-column-dropdown">
 												<h6>Consumer Goods</h6>
-												<li><a href="javascript:void(0)" class="category_name">Clothing,Shoes & Jewelry</a></li>
-												<li><a href="javascript:void(0)" class="category_name">Cosmetics</a></li>
-												<li><a href="javascript:void(0)" class="category_name">Jewellery</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Clothing,Shoes & Jewelry</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Cosmetics</a></li>
+												<li><a href="javascript:void(0)" class="categoryName">Jewellery</a></li>
 											</ul>
 										</div>
 										<div class="clearfix"></div>
@@ -193,6 +223,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 															<li><a href="checkout.jsp">Cart</a></li>
 															<li><a href="history.jsp">Shopping History</a></li>
 															<li><a href="review.jsp">Review</a></li>
+															<li><a href="sell.jsp">Sell Item</a></li>
 															<li><a href="index2.jsp" id="toggleLoggedInState">Sign Out</a></li>
 														</ul>
 													</div>
