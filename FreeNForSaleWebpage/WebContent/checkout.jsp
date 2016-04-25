@@ -46,6 +46,7 @@
 			<th class="t-head">Quantity</th>
 			<th class="t-head">Total</th>
 		  </tr>
+		  
 		  <tr class="cross">
 			<td class="ring-in t-data">
 				<a href="single.html" class="at-in">
@@ -70,7 +71,7 @@
 			<td class="t-data">$100.00</td>
 			
 		  </tr>
-		  <tr class="cross1">
+		<!--   <tr class="cross1">
 		  <td class="t-data ring-in"><a href="single.html" class="at-in"><img src="images/pcc2.jpg" class="img-responsive" alt=""></a>
 			<div class="sed">
 				<h5>Sed ut perspiciatis unde</h5>
@@ -85,7 +86,7 @@
 									<div class="entry value-plus active">&nbsp;</div>
 								</div>
 							</div>
-							<!--quantity-->
+							quantity
 		
 			</td>
 			<td class="t-data">$200.00</td>
@@ -111,7 +112,7 @@
 			</td>
 			<td class="t-data">$150.00</td>
 			
-		  </tr>
+		  </tr> -->
 	</table>
 				<div class=" cart-total">
 			
