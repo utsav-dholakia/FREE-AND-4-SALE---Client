@@ -57,6 +57,7 @@ public class InventoryControllerServlet extends HttpServlet {
 			}
  
 			Map<Integer,ArrayList<InventoryBean>> iBeans= restResponse.getEntity(new GenericType<Map<Integer,ArrayList<InventoryBean>>>(){});
+			request.setAttribute("iBeans", iBeans);
 			System.out.println(iBeans.get(1).get(0).getCategoryName());
 			
 		} catch (Exception e) {
@@ -65,16 +66,16 @@ public class InventoryControllerServlet extends HttpServlet {
 		}
 		
 		if(status){
-			request.setAttribute("USER", "-1");
+			Map<Integer,ArrayList<InventoryBean>> iBeans=(Map<Integer,ArrayList<InventoryBean>>)request.getAttribute("iBeans");
+			ArrayList<InventoryBean> featuredList=iBeans.get(1);
+			System.out.println(featuredList.size());
 			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
 			rd.forward(request, response);
-			return;
 		}
 		else
 		{
 			RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
 			rd.forward(request, response);
-			return;
 		}
 	
     }
@@ -110,16 +111,13 @@ public class InventoryControllerServlet extends HttpServlet {
 		}
 		
 		if(status){
-			request.setAttribute("USER", "-1");
 			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
 			rd.forward(request, response);
-			return;
 		}
 		else
 		{
 			RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
 			rd.forward(request, response);
-			return;
 		}
 	
     }

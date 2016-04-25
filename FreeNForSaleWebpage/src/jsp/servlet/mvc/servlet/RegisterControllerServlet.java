@@ -137,7 +137,7 @@ public class RegisterControllerServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("UID", statusString);
 			session.setAttribute("USER", name);
-			RequestDispatcher rd=request.getRequestDispatcher("InventoryControllerServlet");
+			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
 			rd.forward(request, response);
 		}
 		else

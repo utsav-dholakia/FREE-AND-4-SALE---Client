@@ -81,13 +81,11 @@ public class InventoryByCategoryServlet extends HttpServlet {
 		if(status){
 			RequestDispatcher rd=request.getRequestDispatcher("products.jsp");
 			rd.forward(request, response);
-			return;
 		}
 		else
 		{
 			RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
 			rd.forward(request, response);
-			return;
 		}
 	
     }

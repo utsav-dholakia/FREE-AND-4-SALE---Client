@@ -4,16 +4,16 @@
 	<div class="social animated wow fadeInDown" data-wow-delay=".1s">
 		<div class="container">
 			<div class="col-sm-3 social-ic">
-				<a href="#">FACEBOOK</a>
+				<a href="https://www.facebook.com/" target="_blank">FACEBOOK</a>
 			</div>
 			<div class="col-sm-3 social-ic">
-				<a href="#">TWITTER</a>
+				<a href="https://twitter.com/" target="_blank">TWITTER</a>
 			</div>
 			<div class="col-sm-3 social-ic">
-				<a href="#">GOOGLE+</a>
+				<a href="https://plus.google.com/explore" target="_blank">GOOGLE+</a>
 			</div>
 			<div class="col-sm-3 social-ic">
-				<a href="#">PINTEREST</a>
+				<a href="https://www.pinterest.com/" target="_blank">PINTEREST</a>
 			</div>
 			<div class="clearfix"></div>
 		</div>

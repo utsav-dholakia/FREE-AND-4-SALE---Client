@@ -2,7 +2,6 @@ package jsp.servlet.mvc.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.client.Client;
@@ -18,42 +18,44 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
-import jsp.servlet.mvc.bean.CartBean;
 import jsp.servlet.mvc.bean.InventoryBean;
-import jsp.servlet.mvc.bean.ViewCartBean;
+import jsp.servlet.mvc.bean.LoginBean;
 
 /**
  * Servlet implementation class SessionControllerServlet
  */
-@WebServlet("/CartControllerServlet")
-public class CartControllerServlet extends HttpServlet {
+@WebServlet("/SearchControllerServlet")
+public class SearchControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String statusString;
-       
+    private static LoginBean bean; 
+    private static String statusString;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartControllerServlet() {
+    public SearchControllerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	// TODO Auto-generated method stub
-    	//super.doGet(request, response);
-		System.out.println("Cart controller servlet call...");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	System.out.println("Search Controller Servlet Post call...");
 		Boolean status = true;
+		
+		String itemName = request.getParameter("itemName");
+		System.out.println("input param : " + itemName);
+		bean=new LoginBean();
+		bean.setName(itemName);
+		request.setAttribute("bean",bean);
+
 		try {
 			
 			Client client = Client.create();
-			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/CartService/getCart");
+			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/InventoryServices/SearchInventory");
 			
-			CartBean cartBean= new CartBean();
-			cartBean.setUserId((Integer)request.getSession().getAttribute("UID"));
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")
 			    .accept(MediaType.APPLICATION_JSON)
-			    .post(ClientResponse.class, cartBean);
+			    .post(ClientResponse.class);
 			
 			
 			if(restResponse.getStatus() == 400)
@@ -66,27 +68,24 @@ public class CartControllerServlet extends HttpServlet {
 				}
 			}
  
-			List<ViewCartBean> cartList= restResponse.getEntity(new GenericType<List<ViewCartBean>>(){});
-			System.out.println(cartList.get(0).getItemName());
-			request.setAttribute("cartList",cartList);
-
+			ArrayList<InventoryBean> iBeans= restResponse.getEntity(new GenericType<ArrayList<InventoryBean>>(){});
+			System.out.println("iBeans size:" + iBeans.size());
+			for(int i = 0 ; i < iBeans.size(); i++)
+				System.out.println(iBeans.get(i).getInventoryName());
+			
 		} catch (Exception e) {
 			status= false;
 			e.printStackTrace();
 		}
 		
 		if(status){
-			System.out.println("status = true");
-			RequestDispatcher rd=request.getRequestDispatcher("checkout.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("products.jsp");
 			rd.forward(request, response);
-			return;
 		}
 		else
 		{
-			System.out.println("status = false");
 			RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
 			rd.forward(request, response);
-			return;
 		}
 	
     }
