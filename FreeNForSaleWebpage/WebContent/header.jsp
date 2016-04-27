@@ -55,7 +55,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					data-wow-delay=".5s">
 					<div class="navbar-brand logo-nav-left ">
 						<h2 class="animated wow pulse" data-wow-delay=".5s">
-							<a href="javascript:void(0)" class="gotoHomePage">Free<span> N For Sale</span></a>
+							<a href="index2.jsp" class="gotoHomePage">Free<span> N For Sale</span></a>
 						</h2>
 					</div>
 					
@@ -100,11 +100,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		$('#search').keypress(function(event){
 		    var keycode = (event.keyCode ? event.keyCode : event.which);
 		    if(keycode == '13'){
-		    	alert("Enter pressed");      
+		    	var sendData = {};
+				sendData.itemName = $("#search").val();
+				console.log("sendData : " + sendData.itemName);
+				$.ajax({
+					type: "POST",
+					url: "https://localhost:9443/FreeNForSaleWebpage/SearchControllerServlet",
+					data: JSON.stringify(sendData)
+				});    
 		    }
 		});
 		$("#searchbutton").click(function(){
-			alert("Enter pressed");
+			var sendData = {};
+			sendData.itemName = $("#search").val();
+			console.log("sendData : " + sendData.itemName);
+			$.ajax({
+				type: "POST",
+				url: "https://localhost:9443/FreeNForSaleWebpage/SearchControllerServlet",
+				data: JSON.stringify(sendData)
+			});
 		});
 		$(".categoryName").on("click",function(){
 			var value = $(this).text();
@@ -147,23 +161,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 url: "https://localhost:9443/FreeNForSaleWebpage/SessionControllerServlet"
 			});
 		});
+		$("#checkout").on("click",function(){
+			$.ajax({
+				 type: "GET",
+				 url: "https://localhost:9443/FreeNForSaleWebpage/CartControllerServlet"
+			});
+		});
+		
 	});
 	
 	
 </script>				
-				<div class="header-right animated wow fadeInRight col-sm-3"
-				data-wow-delay=".5s">
-				<div class="header-right1">
-					<ul id="appendUserName">
-						<li class="toggleWhenLoggedIn"><i class="glyphicon glyphicon-log-in"></i>
-						<a class="loginLink" href="login.jsp">Login</a></li>
-						<li class="toggleWhenLoggedIn"><i class="glyphicon glyphicon-book"></i>
-						<a class="loginLink" href="register.jsp">Register</a></li>
-						<li id="appendUserNameHere"></li>
-					</ul>
-				</div>
-				</div>
-				<div class="clearfix"></div>
+		<div class="header-right animated wow fadeInRight col-sm-3" data-wow-delay=".5s">
+		<div class="header-right1">
+			<ul id="appendUserName">
+				<li class="toggleWhenLoggedIn"><i class="glyphicon glyphicon-log-in"></i>
+				<a class="loginLink" href="login.jsp">Login</a></li>
+				<li class="toggleWhenLoggedIn"><i class="glyphicon glyphicon-book"></i>
+				<a class="loginLink" href="register.jsp">Register</a></li>
+				<li id="appendUserNameHere"></li>
+			</ul>
+		</div>
+		</div>
+		<div class="clearfix"></div>
 			</div>
 		</div>
 		<div class="container">
@@ -171,15 +191,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<nav class="navbar navbar-default">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="navbar-header nav_2" style="margin-top:10px;">
-						<span>
 						<input class="form-inline" id="search" placeholder="Search Product" type="text" size="50"></input>
 						<input type="button" class="form-inline btn btn-success" id="searchbutton" value="Search"/>
-						</span>
 					</div>
 					
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav col-sm-3">
-							<li><a href="javascript:void(0)" class="gotoHomePage">Home</a></li>
+							<li><a href="index2.jsp" class="gotoHomePage">Home</a></li>
 							<!-- Mega Menu -->
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Categories <b class="caret"></b></a>
@@ -219,11 +237,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<div class="row">
 													<div class="col-sm-2">
 														<ul class="multi-column-dropdown">
-															<li><a href="profile.jsp">User Profile</a></li>
-															<li><a href="checkout.jsp">Cart</a></li>
-															<li><a href="history.jsp">Shopping History</a></li>
-															<li><a href="review.jsp">Review</a></li>
-															<li><a href="sell.jsp">Sell Item</a></li>
+															<li><a href="profile.jsp" id="userProfile">User Profile</a></li>
+															<li><a href="checkout.jsp" id="checkout">Cart</a></li>
+															<li><a href="history.jsp" id="history">Shopping History</a></li>
+															<li><a href="review.jsp" id="review">Review</a></li>
 															<li><a href="index2.jsp" id="toggleLoggedInState">Sign Out</a></li>
 														</ul>
 													</div>

@@ -7,7 +7,7 @@
 <div class="banner-top">
 	<div class="container">
 		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Products</h2>
-		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index.html">Home</a><label>/</label>Products<label>/</label>Men's</h3>
+		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index2.jsp" id="gotoHomePage">Home</a><label>/</label>Products<label>/</label>Men's</h3>
 		<div class="clearfix"> </div>
 	</div>
 </div>

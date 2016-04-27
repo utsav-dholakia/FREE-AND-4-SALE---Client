@@ -81,7 +81,7 @@ public class SessionControllerServlet extends HttpServlet {
 			session.setAttribute("UID", statusString);
 			session.setAttribute("USER", name);
 			System.out.println("redirecting to inventorycontroller");
-			RequestDispatcher rd=request.getRequestDispatcher("InventoryControllerServlet");
+			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
 			rd.forward(request, response);
 		}
 		else
@@ -96,11 +96,12 @@ public class SessionControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("sessioncontroller servlet get call");
 		response.setContentType("text/html");
 		bean=new LoginBean();
 		HttpSession session = request.getSession();
 		session.invalidate();
-		RequestDispatcher rd=request.getRequestDispatcher("InventoryControllerServlet");
+		RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
 		rd.forward(request, response);
 	}
 

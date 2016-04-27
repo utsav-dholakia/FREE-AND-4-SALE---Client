@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<%@include file="header.jsp" %>
+
+<%@include file="header.jsp" %>
 
 <!--banner-->
 <div class="banner-top">
 	<div class="container">
 		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Checkout</h2>
-		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index.html">Home</a><label>/</label>Checkout</h3>
+		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index2.jsp" id="gotoHomePage">Home</a><label>/</label>Checkout</h3>
 		<div class="clearfix"> </div>
 	</div>
 </div>
