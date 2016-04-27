@@ -1,8 +1,6 @@
 package jsp.servlet.mvc.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,52 +8,52 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
 import jsp.servlet.mvc.bean.InventoryBean;
-import jsp.servlet.mvc.bean.LoginBean;
+import jsp.servlet.mvc.bean.ItemDetailBean;
 
 /**
  * Servlet implementation class SessionControllerServlet
  */
-@WebServlet("/SearchControllerServlet")
-public class SearchControllerServlet extends HttpServlet {
+@WebServlet("/SingleItemControllerServlet")
+public class SingleItemControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static LoginBean bean; 
+    private static InventoryBean inventoryBean;
     private static String statusString;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchControllerServlet() {
+    public SingleItemControllerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("Search Controller Servlet Post call...");
+    	System.out.println("Single Item Controller Servlet Post call...");
 		Boolean status = true;
 		
-		String itemName = request.getParameter("itemName");
-		System.out.println("input param : " + itemName);
-		bean=new LoginBean();
-		bean.setName(itemName);
-		request.setAttribute("bean",bean);
+		int itemId = Integer.parseInt(request.getParameter("itemId"));
+		System.out.println("input param : " + itemId);
+		//bean=new LoginBean();
+		inventoryBean = new InventoryBean();
+		inventoryBean.setItemId(itemId);
+		//bean.setName(itemName);
+		request.setAttribute("bean",inventoryBean);
 
 		try {
 			
 			Client client = Client.create();
-			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/InventoryServices/SearchInventory");
+			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/InventoryServices/FetchMoreDetails");
 			
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")
 			    .accept(MediaType.APPLICATION_JSON)
-			    .post(ClientResponse.class,bean);
+			    .post(ClientResponse.class,inventoryBean);
 			
 			
 			if(restResponse.getStatus() == 400)
@@ -68,11 +66,9 @@ public class SearchControllerServlet extends HttpServlet {
 				}
 			}
  
-			ArrayList<InventoryBean> iBeans= restResponse.getEntity(new GenericType<ArrayList<InventoryBean>>(){});
+			ItemDetailBean iBeans = restResponse.getEntity(ItemDetailBean.class);
 			request.setAttribute("iBeans", iBeans);
-			System.out.println("iBeans size:" + iBeans.size());
-			for(int i = 0 ; i < iBeans.size(); i++)
-				System.out.println(iBeans.get(i).getInventoryName());
+			System.out.println(iBeans.getInventoryName());
 			
 		} catch (Exception e) {
 			status= false;
@@ -80,7 +76,8 @@ public class SearchControllerServlet extends HttpServlet {
 		}
 		
 		if(status){
-			RequestDispatcher rd=request.getRequestDispatcher("searchresults.jsp");
+			System.out.println("forwarding to single.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("single.jsp");
 			rd.forward(request, response);
 		}
 		else

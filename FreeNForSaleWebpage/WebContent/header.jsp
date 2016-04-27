@@ -62,9 +62,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 <% 
 	String name = null;
+	int UId = -1;
 	if(session != null)		
-	{
+	{	
 		name=(String)session.getAttribute("USER");
+		UId=(Integer)session.getAttribute("UID");
 		LoginBean bean=(LoginBean)request.getAttribute("loginbean");
 		out.println("Session is set");
 	}
@@ -97,29 +99,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		});
 	}
 	$(document).ready(function(){
-		$('#search').keypress(function(event){
-		    var keycode = (event.keyCode ? event.keyCode : event.which);
-		    if(keycode == '13'){
-		    	var sendData = {};
-				sendData.itemName = $("#search").val();
-				console.log("sendData : " + sendData.itemName);
-				$.ajax({
-					type: "POST",
-					url: "https://localhost:9443/FreeNForSaleWebpage/SearchControllerServlet",
-					data: JSON.stringify(sendData)
-				});    
-		    }
-		});
-		$("#searchbutton").click(function(){
-			var sendData = {};
-			sendData.itemName = $("#search").val();
-			console.log("sendData : " + sendData.itemName);
-			$.ajax({
-				type: "POST",
-				url: "https://localhost:9443/FreeNForSaleWebpage/SearchControllerServlet",
-				data: JSON.stringify(sendData)
-			});
-		});
 		$(".categoryName").on("click",function(){
 			var value = $(this).text();
 			
@@ -167,7 +146,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 url: "https://localhost:9443/FreeNForSaleWebpage/CartControllerServlet"
 			});
 		});
-		
+		$("#review").on("click",function(){
+			$.ajax({
+				 type: "GET",
+				 url: "https://localhost:9443/FreeNForSaleWebpage/ReviewControllerServlet"
+			});
+		});
 	});
 	
 	
@@ -190,16 +174,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="logo-nav">
 				<nav class="navbar navbar-default">
 					<!-- Brand and toggle get grouped for better mobile display -->
+					<form action = "SearchControllerServlet" method = "post">
 					<div class="navbar-header nav_2" style="margin-top:10px;">
-						<input class="form-inline" id="search" placeholder="Search Product" type="text" size="50"></input>
-						<input type="button" class="form-inline btn btn-success" id="searchbutton" value="Search"/>
+						<input class="form-inline" name="itemName" id="search" placeholder="Search Product" type="text" size="50"/>
+						<input type="submit" class="form-inline btn btn-success" id="searchbutton" value="Search"/>
 					</div>
+					</form>
 					
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav col-sm-3">
 							<li><a href="index2.jsp" class="gotoHomePage">Home</a></li>
 							<!-- Mega Menu -->
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
+							<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Categories <b class="caret"></b></a>
 								<ul class="dropdown-menu multi" style="left:-400%;width:600px;">
 									<div class="row">
@@ -229,7 +215,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</div>
 										<div class="clearfix"></div>
 									</div>
-									</ul></li>
+									</ul></li> -->
 									<li class="dropdown toggleWhenLoggedOut">
 										<a href="#" class="dropdown-toggle"
 										data-toggle="dropdown" id="profileUserName"></a>

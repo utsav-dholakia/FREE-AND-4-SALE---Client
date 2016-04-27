@@ -163,7 +163,7 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 	</div>
 	<!----->
 	<!---->
-	<div class="content-top">
+	 <div class="content-top">
 		<div class="col-md-7 col-md2 animated wow fadeInLeft" data-wow-delay=".1s">
 <%ArrayList<InventoryBean> lightPrdctsList=iBeans.get(3);
 	for (int i=0; i<lightPrdctsList.size(); i++) {%>
@@ -195,7 +195,7 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 					</div>
 				</div>
 			</div>
-	<% } %>
+	<% } %> 
 	
 		<div class="clearfix"></div>
 		</div>
