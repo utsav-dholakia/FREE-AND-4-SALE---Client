@@ -76,17 +76,13 @@ public class CartControllerServlet extends HttpServlet {
 		}
 		
 		if(status){
-			System.out.println("status = true");
 			RequestDispatcher rd=request.getRequestDispatcher("checkout.jsp");
 			rd.forward(request, response);
-			return;
 		}
 		else
 		{
-			System.out.println("status = false");
 			RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
 			rd.forward(request, response);
-			return;
 		}
 	
     }

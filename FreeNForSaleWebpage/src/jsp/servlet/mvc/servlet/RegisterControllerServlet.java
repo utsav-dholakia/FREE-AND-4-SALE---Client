@@ -142,7 +142,6 @@ public class RegisterControllerServlet extends HttpServlet {
 		}
 		else
 		{
-			request.setAttribute("USER", "-1");
 			RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
 			rd.forward(request, response);
 		}

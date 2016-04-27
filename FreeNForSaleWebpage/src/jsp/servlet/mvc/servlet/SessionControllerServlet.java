@@ -59,9 +59,10 @@ public class SessionControllerServlet extends HttpServlet {
 			    .type(MediaType.APPLICATION_JSON)
 			    .post(ClientResponse.class, bean);
 			
+			statusString = restResponse.getEntity(String.class);
+			
 			if(restResponse.getStatus() == 400)
 			{
-				statusString = restResponse.getEntity(String.class);
 				status=false;
 				if(statusString.equals("-1"))
 				{
@@ -77,6 +78,7 @@ public class SessionControllerServlet extends HttpServlet {
 		}
 	
 		if(status){
+			System.out.println("UID :" + statusString);
 			HttpSession session = request.getSession();
 			session.setAttribute("UID", statusString);
 			session.setAttribute("USER", name);
@@ -86,7 +88,6 @@ public class SessionControllerServlet extends HttpServlet {
 		}
 		else
 		{
-			request.setAttribute("USER", "-1");
 			RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
 			rd.forward(request, response);
 		}

@@ -174,7 +174,8 @@ ArrayList<InventoryBean> iBeans = (ArrayList<InventoryBean>)request.getAttribute
 			<div class="mid-popular">
 			<table class="table">
 			<tbody>
-		<%for(int i= 0 ; i < iBeans.size(); i++) { %>
+		<% out.println("UID :" + UId);
+		for(int i= 0 ; i < iBeans.size(); i++) { %>
 			
 			<tr>
 			<td>

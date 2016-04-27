@@ -9,6 +9,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <head>
 <title>FreeNForSale</title>
 <%@page import="jsp.servlet.mvc.bean.LoginBean"%>
+<%@page language="java" session="false" %>
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -62,15 +63,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 <% 
 	String name = null;
-	int UId = -1;
+	String UId = null;
+	HttpSession session = request.getSession(false);
 	if(session != null)		
 	{	
 		name=(String)session.getAttribute("USER");
-		UId=(Integer)session.getAttribute("UID");
+		UId=(String)session.getAttribute("UID");
 		LoginBean bean=(LoginBean)request.getAttribute("loginbean");
 		out.println("Session is set");
 	}
-	else if( session == null || (request.getAttribute("USER") == "-1"))
+	else if( session == null)
 	{
 		out.println("Session not set yet");
 	}
