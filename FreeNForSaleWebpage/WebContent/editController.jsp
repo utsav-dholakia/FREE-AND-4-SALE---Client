@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<%@include file="header.jsp"%>
+<%-- 	<%@include file="header.jsp"%> --%>
 	<%@page import="java.util.ArrayList"%>
 	<%@page import="java.util.Map"%>
 	<%@page import="jsp.servlet.mvc.bean.ReviewBean"%>
@@ -22,7 +22,7 @@
 	int size = Integer.parseInt(session.getAttribute("size").toString()); 
 	for (int i =0; i<size; i++){
 		ReviewBean review = new ReviewBean();
-		review.setUserId(Integer.parseInt(UId));
+		review.setUserId(Integer.parseInt(session.getAttribute("uid").toString()));
 		review.setSellerName(request.getParameter("sellername"+i));
 		review.setSellerId(Integer.parseInt(request.getParameter("sellerId"+i)));
 		review.setRatings(Integer.parseInt(request.getParameter("rating"+i)));
@@ -52,7 +52,7 @@
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-// 	request.getRequestDispatcher("review.jsp").forward(request, response);
+	request.getRequestDispatcher("review.jsp").forward(request, response);
 	
 	%>
 	
