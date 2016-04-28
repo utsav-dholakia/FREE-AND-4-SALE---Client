@@ -17,18 +17,18 @@
 		
 			
 			<div class="col-md-8 contact-grids1 animated wow fadeInRight" data-wow-delay=".5s">
-				<form>
+				<form action="contactUsServlet" method="post">
 						<div class="contact-form2">
 							<h4>Name</h4>
 							
-								<input type="text" placeholder="" required="">
+								<input type="text" placeholder="" name="name" required="">
 							
 						</div>
 						
 						<div class="contact-form2">
 							<h4>Email</h4>
 						
-								<input type="email" placeholder="" required="">
+								<input type="email" placeholder="" name="email" required="">
 						
 						</div>
 						
@@ -36,7 +36,7 @@
 						<div class="contact-me ">
 							<h4>Message</h4>
 								
-								<textarea type="text"  placeholder="" required=""> </textarea>
+								<textarea type="text"  placeholder="" name="message" required=""> </textarea>
 						</div>
 						<input type="submit" value="Submit" >
 				</form>
