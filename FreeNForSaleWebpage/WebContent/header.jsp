@@ -148,12 +148,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 url: "https://localhost:9443/FreeNForSaleWebpage/CartControllerServlet"
 			});
 		});
-		$("#review").on("click",function(){
+		/* $("#review").on("click",function(){
 			$.ajax({
 				 type: "GET",
 				 url: "https://localhost:9443/FreeNForSaleWebpage/ReviewControllerServlet"
 			});
-		});
+		}); */
 	});
 	
 	
