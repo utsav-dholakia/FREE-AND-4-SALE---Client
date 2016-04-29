@@ -25,7 +25,7 @@ List<Integer> removeList=new ArrayList<Integer>();
 
 System.out.println("Cart controller servlet call...");
 Boolean status = true;
-int size=cartList.size();
+int size=0;
 try {
 	
 	Client client = Client.create();
@@ -52,7 +52,9 @@ try {
 	cartList = restResponse.getEntity(new GenericType<List<ViewCartBean>>(){});
 	System.out.println(cartList.get(0).getItemName());
 	request.setAttribute("cartList",cartList);
-
+	size=cartList.size();
+	System.out.println("initial size = " +size);
+	System.out.println("RemoveList size = " +removeList.size());
 } catch (Exception e) {
 	status= false;
 	e.printStackTrace();
@@ -67,7 +69,7 @@ try {
 	</div>
 </div>
 <!-- contact -->
-	<form action="purchaseCartServlet" method="post">
+	<form  method="post">
 
 		<div class="check-out">	 
 		<div class="container">	 
@@ -96,6 +98,7 @@ try {
 			<%
 			size--;
 			removeList.add(cartList.get(i).getInventoryId());
+			out.println("delete button clicked");
 			%>
 			console.log("delete button clicked");
 			$(this).parents('.cross').fadeOut('slow', function(c){
@@ -183,7 +186,7 @@ $(document).ready(function(){
 			 </ul>
 			
 <!-- 			 <a href="javascript:void(0)">Produced By Cart</a>
- -->			 <input data-text="Purchase Cart" style="float: right; margin-right : 12px" type="submit" class="but-hover1 item_add" value="Purchase Cart" />
+ -->			 <input data-text="Purchase Cart" style="float: right; margin-right : 12px" type="submit" class="but-hover1 item_add" value="Purchase Cart" onclick="form.action='purchaseCartServlet';" />
 			 
 			</div>
 			
