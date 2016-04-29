@@ -62,9 +62,9 @@
 
 			<div class="col-md-9 animated wow fadeInRight" data-wow-delay=".5s">
 				<div class="mens-toolbar">
-					<p class="showing">
+					<!-- <p class="showing">
 						Sorting By : <a href="javascript:void(0)" id="sort">Name</a>
-					</p>
+					</p> -->
 					<div class="clearfix"></div>
 				</div>
 				<script>
