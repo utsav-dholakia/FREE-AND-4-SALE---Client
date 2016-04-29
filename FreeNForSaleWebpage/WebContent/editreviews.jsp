@@ -48,62 +48,18 @@
 	<!--content-->
 	<div class="product">
 		<div class="container">
-			<div class="col-md-3 product-bottom">
-				<!--categories-->
-				<div class="categories animated wow fadeInUp animated"
-					data-wow-delay=".5s">
-					<h3>Categories</h3>
-					<ul class="cate">
-						<li><i class="glyphicon glyphicon-menu-right"></i><a
-							href="products.html">Best Selling</a> <span>(15)</span></li>
-						<li><i class="glyphicon glyphicon-menu-right"></i><a
-							href="products.html">Man</a> <span>(16)</span></li>
-						<ul>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Accessories</a> <span>(2)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Coats &amp; Jackets</a> <span>(5)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Jeans</a> <span>(1)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">New Arrivals</a> <span>(0)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Suits</a> <span>(1)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Casual Shirts</a> <span>(0)</span></li>
-						</ul>
-						<li><i class="glyphicon glyphicon-menu-right"></i><a
-							href="products.html">Sales</a> <span>(15)</span></li>
-						<li><i class="glyphicon glyphicon-menu-right"></i><a
-							href="products.html">Woman</a> <span>(15)</span></li>
-						<ul>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Accessories</a> <span>(2)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">New Arrivals</a> <span>(0)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Dresses</a> <span>(1)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Casual Shirts</a> <span>(0)</span></li>
-							<li><i class="glyphicon glyphicon-menu-right"></i><a
-								href="products.html">Shorts</a> <span>(4)</span></li>
-						</ul>
-					</ul>
-				</div>
-				<!--//menu-->
-
-			</div>
+			
 			
 			<form  class="edit_form" action="editController.jsp" method="post">
-			<div class="col-md-9 animated wow fadeInRight" data-wow-delay=".5s">
+			<div class="col-md-12 animated wow fadeInRight" data-wow-delay=".5s">
 			<%for (int i=0; i<size; i++) { %>
 			<div class="mid-popular">
 				<div class="col-sm-12 item-grid item-gr  simpleCart_shelfItem">
 							<div class="grid-pro ">
 								<div class="women">
 <%-- 									<h5><input name="userId<%=i%>"  type="hidden" style="width: 180px" value="<%=user[i] %>"></h5> --%>
-									<h5><input name="sellerId<%=i%>"  type="hidden" style="width: 180px" value="<%=seller[i] %>"></h5>
-									<h5><input name="sellername<%=i%>"  type="text" style="width: 180px" value="<%=sellerName[i] %>"></h5>
+									<h5><input name="sellerId<%=i%>"  type="hidden" style="width: 180px; border: 0" value="<%=seller[i] %>"></h5>
+									<h5><input name="sellername<%=i%>"  type="text" style="width: 180px; border: 0" value="<%=sellerName[i] %>" readonly></h5>
 									<h6><input name="rating<%=i%>"  type="text" style="width: 180px" value="<%=rating[i] %>"></h6>
 									<p ><input name="comment<%=i%>"  type="text" style="width: 180px" 
 										value="<%-- <%if (!comment[i].isEmpty()){%> --%> <%=comment[i] %>">
