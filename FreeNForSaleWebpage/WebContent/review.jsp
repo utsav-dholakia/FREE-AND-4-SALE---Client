@@ -62,8 +62,13 @@
 			sellerName[i] = reviewList.get(i).getSellerName();
 			rating[i] =  reviewList.get(i).getRatings();
 			comment[i] = reviewList.get(i).getComments();
+			System.out.println(reviewList.get(i).getSellerName());
+			System.out.println(reviewList.get(i).getRatings());
+			System.out.println(reviewList.get(i).getComments());
+			System.out.println(reviewList.get(i).getUserId());
 		}
 		session.setAttribute("size", reviewList.size());
+		session.setAttribute("uid", UId);
 		Integer size = reviewList.size();
 		
 	%>

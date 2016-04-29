@@ -96,18 +96,18 @@
 			
 			<form  class="edit_form" action="editController.jsp" method="post">
 			<div class="col-md-9 animated wow fadeInRight" data-wow-delay=".5s">
-			<%for (int i=0; i<3; i++) { %>
+			<%for (int i=0; i<size; i++) { %>
 			<div class="mid-popular">
 				<div class="col-sm-12 item-grid item-gr  simpleCart_shelfItem">
 							<div class="grid-pro ">
 								<div class="women">
-									<h5><input name="userId<%=i%>"  type="hidden" style="width: 180px" value="<%=user[i] %>"></h5>
+<%-- 									<h5><input name="userId<%=i%>"  type="hidden" style="width: 180px" value="<%=user[i] %>"></h5> --%>
 									<h5><input name="sellerId<%=i%>"  type="hidden" style="width: 180px" value="<%=seller[i] %>"></h5>
 									<h5><input name="sellername<%=i%>"  type="text" style="width: 180px" value="<%=sellerName[i] %>"></h5>
 									<h6><input name="rating<%=i%>"  type="text" style="width: 180px" value="<%=rating[i] %>"></h6>
-									<p ><input name="comment<%=i%>"  type="text" style="width: 180px" value="<%if (!comment[i].isEmpty()){%>
-																<%=comment[i] %>
-																<%}else {%>No comments added."<% }%>>
+									<p ><input name="comment<%=i%>"  type="text" style="width: 180px" 
+										value="<%-- <%if (!comment[i].isEmpty()){%> --%> <%=comment[i] %>">
+<%-- 																<%}else {%>No comments added."<% }%>> --%>
 									</em></p>
 									
 								</div>
