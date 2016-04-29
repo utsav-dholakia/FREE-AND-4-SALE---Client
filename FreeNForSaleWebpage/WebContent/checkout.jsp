@@ -21,8 +21,11 @@
 int userId = Integer.parseInt(UId);
 String statusString;
 List<ViewCartBean> cartList = new ArrayList();
+List<Integer> removeList=new ArrayList<Integer>();
+
 System.out.println("Cart controller servlet call...");
 Boolean status = true;
+int size=cartList.size();
 try {
 	
 	Client client = Client.create();
@@ -64,21 +67,11 @@ try {
 	</div>
 </div>
 <!-- contact -->
+	<form action="purchaseCartServlet" method="post">
+
 		<div class="check-out">	 
 		<div class="container">	 
 	 
-<script>
-	$(document).ready(function(c) {
-		$('.removeItem').on('click', function(c){
-			console.log("delete button clicked");
-			$(this).parents('.cross').fadeOut('slow', function(c){
-				console.log("fade out complete");
-				$(this).parents('.cross').remove();
-			});
-		});
-	});
-	
-</script>	
  <table class="table animated wow fadeInLeft" data-wow-delay=".5s">
 		  <tr>
 			<th class="t-head head-it ">Item</th>
@@ -86,66 +79,89 @@ try {
 			<th class="t-head">Quantity</th>
 			<th class="t-head">Total</th>
 		  </tr>
-		  <% for(int i = 0 ; i < cartList.size(); i++) {%>
+		  <% for(int i = 0 ; i < cartList.size(); i++) { %>
 		  <tr class="cross">
 			<td class="ring-in t-data">
 				<img src="<%=cartList.get(i).getImage() %>" class="img" style="display:inline;" alt="<%=cartList.get(i).getItemName() %>" width="150" height="150">
 				<div class="sed" style="max-width:60%;display:inline;">
 					<h5><%=cartList.get(i).getItemName() %></h5>
 				</div>
-				<div><button class="btn-primary removeItem" value="Remove Item">Remove Item</button></div>
+				<input type="hidden" name="UId" value="<%=UId%>">
+				<input type="hidden" name="itemId<%=i%>" value="<%=cartList.get(i).getInventoryId()%>">
+				<input type="hidden" name="sellerId<%=i%>" value="<%=cartList.get(i).getSellerId()%>">
+				<script>
+		$(document).ready(function(c) {
+		function removeItem(){
+		
+			<%
+			size--;
+			removeList.add(cartList.get(i).getInventoryId());
+			%>
+			console.log("delete button clicked");
+			$(this).parents('.cross').fadeOut('slow', function(c){
+				console.log("fade out complete");
+				$(this).parents('.cross').remove();
+			});
+		
+		};
+	});
+	
+</script>				<input type="hidden" name="size" value="<%=size%>"> <%session.setAttribute("removeList", removeList); %>
+
+				<div><button type="button" onclick="removeItem()" class="btn-primary removeItem" >Remove Item</button></div>
 				<div class="clearfix"> </div>	
 			 </td>
 <script>
 $(document).ready(function(){
 	$('.value-plus').on('click', function(){
-		var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
-		if(<%= cartList.get(i).getTotalQuantity()%> > divUpd.text())
+		var divUpd = $(this).parent().find('.quantitySelected'), newVal = parseInt(divUpd.attr("value"), 10)+1;
+		if(<%= cartList.get(i).getTotalQuantity()%> > divUpd.attr("value"))
 		{
-			divUpd.text(newVal);
+			divUpd.attr("value",newVal);
 		}
 		else
 		{
 			alert("Total quantity reached for this item");
 		}
 	
-		var totalAmount = ($(this).parents(".cross").find(".price").text()) * ($(this).siblings(".value").text());
-		console.log("price :" + $(this).parents(".cross").find(".price").text());
-		console.log("quantity :" + $(this).siblings(".value").text());
-		$(".calculateTotal").text(totalAmount);
+		var totalAmount = ($(this).parents(".cross").find(".price").attr("value")) * ($(this).parent().find('.quantitySelected').attr("value"));
+		console.log("price :" + $(this).parents(".cross").find(".price").attr("value"));
+		console.log("quantity :" + $(this).parent().find('.quantitySelected').attr("value"));
+		$(this).parents(".cross").find(".calculateTotal").attr("value",totalAmount);
 	});
 	$('.value-minus').on('click', function(){
-		var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
+		var divUpd = $(this).parent().find('.quantitySelected'), newVal = parseInt(divUpd.attr("value"), 10)-1;
 		if(newVal>=1) 
 		{
-			divUpd.text(newVal);
+			divUpd.attr("value",newVal);
 		}
-		var totalAmount = ($(this).parents(".cross").find(".price").text()) * ($(this).siblings(".value").text());
-		console.log("price :" + $(this).parents(".cross").find(".price").text());
-		console.log("quantity :" + $(this).siblings(".value").text());
-		$(".calculateTotal").text(totalAmount);
+		var totalAmount = ($(this).parents(".cross").find(".price").attr("value")) * ($(this).parent().find('.quantitySelected').attr("value"));
+		console.log("price :" + $(this).parents(".cross").find(".price").attr("value"));
+		console.log("quantity :" + $(this).parent().find('.quantitySelected').attr("value"));
+		$(this).parents(".cross").find(".calculateTotal").attr("value",totalAmount);
 	});
 	
 	//var totalCartPrice = $(.)
 	$(".totalPrice").text();
 });
 </script>
-			<td class="t-data">$<span class="price"><%=cartList.get(i).getAmount() %></span></td>
+			<td class="t-data">$ <input class="price" style="border:0; background: white;" name="amount<%=i%>"  value="<%=cartList.get(i).getAmount() %>"/></td>
 			<td class="t-data quantityParentDiv">
 				<div class="quantity"> 
 					<div class="quantity-select">            
 						<div class="entry value-minus">&nbsp;</div>
-						<div class="entry value"><span class="span-1 quantitySelected"><%=cartList.get(i).getQuantity() %></span></div>									
+						<div class="entry value"><input class="span-1 quantitySelected" style="border:0; background: white;" name="quantity<%=i%>"  value="<%=cartList.get(i).getQuantity()%>"/></div>									
 						<div class="entry value-plus active">&nbsp;</div>
 					</div>
 				</div>			
-			</td>
-			<td class="t-data calculateTotal">
+			</td><%float x=Float.parseFloat(cartList.get(i).getAmount())*cartList.get(i).getQuantity(); %>
+			<td class="t-data " > <input style="border:0; background: white;" class="calculateTotal" id="calculateTotal<%=i %>" name="totalAmount"<%=i %> value="<%=x %>" /> 
 			</td>
 			
 		  </tr>
 		<%} %>
 	</table>
+
 				<div class=" cart-total">
 			
 			 <h5 class="continue" >Cart Total</h5>
@@ -162,18 +178,19 @@ $(document).ready(function(){
 			 --> 
 			 <ul class="total_price">
 			   <li class="last_price"> <h4>TOTAL</h4></li>	
-			   <li class="last_price totalPrice"><span></span></li>
+			   <li class="last_price totalPrice"><span id="totalPrice"></span></li>
 			   <div class="clearfix"> </div>
 			 </ul>
 			
-			 <a href="javascript:void(0)">Produced By Cart</a>
+<!-- 			 <a href="javascript:void(0)">Produced By Cart</a>
+ -->			 <input data-text="Purchase Cart" style="float: right; margin-right : 12px" type="submit" class="but-hover1 item_add" value="Purchase Cart" />
 			 
 			</div>
 			
 		
 		 </div>
 		 </div>
-
+	</form>
 	<%@include file="footer.jsp" %>
 </body>
 </html>
