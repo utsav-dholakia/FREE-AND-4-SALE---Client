@@ -64,8 +64,9 @@ public class purchaseCartServlet extends HttpServlet {
 			List<CartBean> clist=new ArrayList<CartBean>();
 			//List<Integer> removeList= new ArrayList<Integer>();
 			List<Integer> tempList2= new ArrayList<Integer>();
-
-			for(int i=0;i<size-1;i++){
+			int removedSize = Integer.parseInt(request.getParameter("removedSize"));
+			System.out.println("removed Size: " + removedSize);
+			for(int i=0;i<removedSize;i++){
 				if(request.getParameter("itemId"+i)!=null){
 					CartBean cb=new CartBean();
 					cb.setAmount((String)request.getParameter("totalAmount"+i));

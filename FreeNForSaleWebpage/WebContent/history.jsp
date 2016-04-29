@@ -149,8 +149,8 @@
 													<%=historyList.get(i).getSellerName()%>
 												</h6>
 												<p>
-													<em class="item_price">Quantity: <%=historyList.get(i).getAmount()%>&nbsp;
-														$<%=historyList.get(i).getAmount()%></em>
+													<em class="item_price">Quantity: <%=historyList.get(i).getQuantity()%>&nbsp;</em><br/>
+													<em class="item_price">Price : $<%=historyList.get(i).getAmount()%></em>
 												</p>
 												<p>
 													<em class="item_price">Purchase Date: <%=historyList.get(i).getTransactionTime()%></em>

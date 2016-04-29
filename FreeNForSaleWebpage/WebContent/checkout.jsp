@@ -25,6 +25,7 @@ List<Integer> removeList=new ArrayList<Integer>();
 
 System.out.println("Cart controller servlet call...");
 Boolean status = true;
+float totalCartPrice = 0;
 int size=0;
 try {
 	
@@ -71,10 +72,24 @@ try {
 </div>
 <!-- contact -->
 	<form  method="post">
-
+	<input type="hidden"  id="removedSize" name="removedSize" value="0"/>
 		<div class="check-out">	 
 		<div class="container">	 
-	 
+<script>
+	$(document).ready(function(c) {
+			var size = <%=size %>;
+			$('.removeItem').on('click', function(c){
+			size--;
+			
+			console.log("delete button clicked");
+			$(this).parents('.cross').fadeOut('slow', function(c){
+				console.log("fade out complete");
+				$(this).parents('.cross').remove();
+			});
+			$("#removedSize").attr("value",size);
+		});
+	});
+</script>	 
  <table class="table animated wow fadeInLeft" data-wow-delay=".5s">
 		  <tr>
 			<th class="t-head head-it ">Item</th>
@@ -93,72 +108,94 @@ try {
 				</div>
 				<input type="hidden" name="itemId<%=i%>" value="<%=cartList.get(i).getInventoryId()%>">
 				<input type="hidden" name="sellerId<%=i%>" value="<%=cartList.get(i).getSellerId()%>">
-				<script>
-		$(document).ready(function(c) {
-			$('.removeItem').on('click', function(c){
-		
-			
-			console.log("delete button clicked");
-			$(this).parents('.cross').fadeOut('slow', function(c){
-				console.log("fade out complete");
-				$(this).parents('.cross').remove();
-			});
-		
-		});
-	});
-	
-</script>				<input type="hidden" name="size" value="<%=size%>"> 
+								<input type="hidden" name="size" value="<%=size%>"> 
 
 				<div><a class="btn-primary removeItem" >Remove Item</a></div>
 				<div class="clearfix"> </div>	
 			 </td>
 <script>
 $(document).ready(function(){
-	$('.value-plus').on('click', function(){
+	 $('#value-plus<%=i%>').on('click', function(){
+		 console.log("plus pressed");
 		var divUpd = $(this).parent().find('.quantitySelected'), newVal = parseInt(divUpd.attr("value"), 10)+1;
 		if(<%= cartList.get(i).getTotalQuantity()%> > divUpd.attr("value"))
 		{
 			divUpd.attr("value",newVal);
+			var totalAmount = ($(this).parents(".cross").find(".price").attr("value")) * ($(this).parent().find('.quantitySelected').attr("value"));
+			console.log("price :" + $(this).parents(".cross").find(".price").attr("value"));
+			console.log("quantity :" + $(this).parent().find('.quantitySelected').attr("value"));
+			<%-- //<%=totalCartPrice%> = <%=totalCartPrice%> + totalAmount;
+			//console.log("totalCartPrice :" + <%=totalCartPrice%>); --%>
+			var totalCartPrice = parseFloat($(".totalPrice").text()) + parseFloat($(this).parents(".cross").find(".price").attr("value"));
+			console.log("totalCartPrice(+) :" + totalCartPrice);
+			$(".totalPrice").text(totalCartPrice);
+			$(this).parents(".cross").find(".calculateTotal").attr("value",totalAmount);
 		}
-		else
-		{
-			alert("Total quantity reached for this item");
-		}
-	
-		var totalAmount = ($(this).parents(".cross").find(".price").attr("value")) * ($(this).parent().find('.quantitySelected').attr("value"));
-		console.log("price :" + $(this).parents(".cross").find(".price").attr("value"));
-		console.log("quantity :" + $(this).parent().find('.quantitySelected').attr("value"));
-		$(this).parents(".cross").find(".calculateTotal").attr("value",totalAmount);
 	});
-	$('.value-minus').on('click', function(){
+	$('#value-minus<%=i%>').on('click', function(){
+		console.log("minus pressed");
 		var divUpd = $(this).parent().find('.quantitySelected'), newVal = parseInt(divUpd.attr("value"), 10)-1;
 		if(newVal>=1) 
 		{
 			divUpd.attr("value",newVal);
+			var totalAmount = ($(this).parents(".cross").find(".price").attr("value")) * ($(this).parent().find('.quantitySelected').attr("value"));
+			console.log("price :" + $(this).parents(".cross").find(".price").attr("value"));
+			console.log("quantity :" + $(this).parent().find('.quantitySelected').attr("value"));
+			<%-- <%=totalCartPrice%> = <%=totalCartPrice%> - totalAmount;
+			console.log("totalCartPrice :" + <%=totalCartPrice%>); --%>
+			var totalCartPrice = parseFloat($(".totalPrice").text()) - parseFloat($(this).parents(".cross").find(".price").attr("value"));
+			console.log("totalCartPrice(+) :" + totalCartPrice);
+			$(".totalPrice").text(totalCartPrice);
+			$(this).parents(".cross").find(".calculateTotal").attr("value",totalAmount);
 		}
-		var totalAmount = ($(this).parents(".cross").find(".price").attr("value")) * ($(this).parent().find('.quantitySelected').attr("value"));
-		console.log("price :" + $(this).parents(".cross").find(".price").attr("value"));
-		console.log("quantity :" + $(this).parent().find('.quantitySelected').attr("value"));
-		$(this).parents(".cross").find(".calculateTotal").attr("value",totalAmount);
 	});
-	
-	//var totalCartPrice = $(.)
-	$(".totalPrice").text();
+
 });
+<%-- function plusPressed()
+{
+	console.log("Plus pressed");
+	var divUpd = $(this).parent().find('.quantitySelected'), newVal = parseInt(divUpd.attr("value"), 10)+1;
+	if(<%= cartList.get(i).getTotalQuantity()%> > divUpd.attr("value"))
+	{
+		divUpd.attr("value",newVal);
+	}
+	else
+	{
+		alert("Total quantity reached for this item");
+	}
+
+	var totalAmount = ($(this).parents(".cross").find(".price").attr("value")) * ($(this).parent().find('.quantitySelected').attr("value"));
+	console.log("price :" + $(this).parents(".cross").find(".price").attr("value"));
+	console.log("quantity :" + $(this).parent().find('.quantitySelected').attr("value"));
+	$(this).parents(".cross").find(".calculateTotal").attr("value",totalAmount);
+}
+function minusPressed()
+{
+	console.log("Minus pressed");
+	var divUpd = $(this).parent().find('.quantitySelected'), newVal = parseInt(divUpd.attr("value"), 10)-1;
+	if(newVal>=1) 
+	{
+		divUpd.attr("value",newVal);
+	}
+	var totalAmount = ($(this).parents(".cross").find(".price").attr("value")) * ($(this).parent().find('.quantitySelected').attr("value"));
+	console.log("price :" + $(this).parents(".cross").find(".price").attr("value"));
+	console.log("quantity :" + $(this).parent().find('.quantitySelected').attr("value"));
+	$(this).parents(".cross").find(".calculateTotal").attr("value",totalAmount);
+} --%>
 </script>
 			<td class="t-data">$ <input class="price" style="border:0; background: white;" name="amount<%=i%>"  value="<%=cartList.get(i).getAmount() %>"/></td>
 			<td class="t-data quantityParentDiv">
 				<div class="quantity"> 
 					<div class="quantity-select">            
-						<div class="entry value-minus">&nbsp;</div>
+						<div class="entry value-minus" id="value-minus<%=i%>">&nbsp;</div>
 						<div class="entry value"><input class="span-1 quantitySelected" style="border:0; background: white;" name="quantity<%=i%>"  value="<%=cartList.get(i).getQuantity()%>"/></div>									
-						<div class="entry value-plus active">&nbsp;</div>
+						<div class="entry value-plus active" id="value-plus<%=i%>">&nbsp;</div>
 					</div>
 				</div>			
 			</td><%float x=Float.parseFloat(cartList.get(i).getAmount())*cartList.get(i).getQuantity(); %>
 			<td class="t-data " > <input type="text" style="border:0; background: white;" class="calculateTotal" id="calculateTotal<%=i %>" name="totalAmount<%=i%>" value="<%=x %>" /> 
 			</td>
-			
+			<% totalCartPrice += x; %>
 		  </tr>
 		<%} %>
 	</table>
@@ -177,12 +214,19 @@ $(document).ready(function(){
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 --> 
+<script>
+ 	console.log("totalCartPrice :" + <%=totalCartPrice%>);
+	$(document).ready(function(){
+		$(".totalPrice").text("<%=totalCartPrice%>");	
+	});
+ 	
+</script>
 			 <ul class="total_price">
 			   <li class="last_price"> <h4>TOTAL</h4></li>	
-			   <li class="last_price totalPrice"><span id="totalPrice"></span></li>
+			   <li class="last_price" style="display:inline">$<p style="display:inline" class="totalPrice" id="totalPrice"></p></li>
 			   <div class="clearfix"> </div>
 			 </ul>
-			
+			<br/><br/>
 <!-- 			 <a href="javascript:void(0)">Produced By Cart</a>
  -->			 <input data-text="Purchase Cart" style="float: right; margin-right : 12px" type="submit" class="but-hover1 item_add" value="Purchase Cart" onclick="form.action='purchaseCartServlet';" />
 			 
