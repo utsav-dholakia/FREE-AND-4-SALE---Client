@@ -1,7 +1,6 @@
 package jsp.servlet.mvc.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,16 +8,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
 import jsp.servlet.mvc.bean.CartBean;
-import jsp.servlet.mvc.bean.ViewCartBean;
 
 /**
  * Servlet implementation class SessionControllerServlet
@@ -49,10 +47,11 @@ public class AddToCartControllerServlet extends HttpServlet {
 			Client client = Client.create();
 			client.addFilter(new LoggingFilter());
 			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/CartService/addToCart");
-			
+			HttpSession session = request.getSession();
 			cartBean = new CartBean();
-			cartBean.setUserId((Integer)request.getSession().getAttribute("UID"));
-			cartBean.setAmount(request.getParameter("price"));
+			cartBean.setUserId(Integer.parseInt((String)session.getAttribute("UID")));
+			cartBean.setAmount((String)request.getParameter("price"));
+			System.out.println("Price :" + (String)request.getParameter("price"));
 			cartBean.setInventoryId(Integer.parseInt(request.getParameter("itemId")));
 			cartBean.setQuantity(1);
 			

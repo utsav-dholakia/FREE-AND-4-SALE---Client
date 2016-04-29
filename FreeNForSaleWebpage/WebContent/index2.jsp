@@ -50,7 +50,7 @@ try {
 ArrayList<InventoryBean> featuredList=iBeans.get(1);
 %>
 <script>
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		$(".singleItemForm").on("click",function(){
 			console.log("submitting singleItemForm");
 			$(this).parent().parent().action = "SingleItemController"; //Trigger action
@@ -61,7 +61,7 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 			$(this).parent().parent().action = "AddToCartControllerServlet"; //Trigger action
 			$(this).parent().parent().submit();
 		});
-	});
+	}); */
 </script>	
 		
 		<div class="banner-right">
@@ -76,16 +76,16 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 						<form method="post">
 						<div class="women simpleCart_shelfItem">
 							<h6>
-							<button class="btn singleItemForm">
+							<button class="btn singleItemForm" onclick="form.action='SingleItemControllerServlet';">
 								<a href="single.jsp" name="inventoryName"><%=featuredList.get(i).getInventoryName() %></a>
 							</button>
 							</h6>
 							<input type="text" class="itemId" name="itemId" value="<%=featuredList.get(i).getItemId() %>">
 							<p class="ba-price">
-								<em class="item_price" name="price">$<%=featuredList.get(i).getPrice()%></em>
+								<b>$<input size="5" type="text" style="border:0;background:white" class="item_price price" name="price" value="<%=featuredList.get(i).getPrice()%>"/></b>
 							</p>
-							<%if (featuredList.get(i).getRemainingQuantity()>0){ %>
-							<button class="btn item_add addToCartForm">
+							<%if (featuredList.get(i).getRemainingQuantity() > 0 && session != null){ %>
+							<button class="btn item_add addToCartForm" onclick="form.action='AddToCartControllerServlet';">
 								Add To Cart
 							</button>
 							<%} %>
@@ -155,22 +155,22 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 						</div>
 					</figure>
 				</div>
-				<form action="SingleItemControllerServlet" method="post">
+				<form method="post">
 				<div class="women">
 						<h6>
-						<button type="submit" class="btn">
+						<button class="btn" onclick="form.action='SingleItemControllerServlet';">
 							<a href="single.jsp"><%=consumerList.get(i).getInventoryName() %></a>
 						</button>
 						</h6>
 						<input type="text" class="itemId" name="itemId" value="<%=consumerList.get(i).getItemId() %>">
 						<p>
-							<em class="item_price">$<%=consumerList.get(i).getPrice()%></em>
+							<b>$<input size="5" type="text" style="border:0;background:white" class="item_price price" name="price" value="<%=consumerList.get(i).getPrice()%>"/></b>
 						</p>
-						<%if (consumerList.get(i).getRemainingQuantity()>0){ %>
-						<a href="#" data-text="Add To Cart" class="but-hover1 item_add">Add To Cart</a>
-						<% }else{ %>
-								<em class="item_price">Out of Stock</em>
-							<%} %>
+						<%if (consumerList.get(i).getRemainingQuantity()>0 && session != null){ %>
+						<button class="btn item_add addToCartForm" onclick="form.action='AddToCartControllerServlet';">
+						Add To Cart
+						</button>
+						<% }%>
 				</div>
 				</form>
 			</div>
@@ -195,20 +195,22 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 							</div>
 						</figure>
 					</div>
-					<form action="SingleItemControllerServlet" method="post">
+					<form method="post">
 					<div class="women">
 						<h6>
-						<button type="submit" class="btn">
+						<button type="submit" class="btn" onclick="form.action='SingleItemControllerServlet';">
 							<a href="single.jsp"><%=lightPrdctsList.get(i).getInventoryName() %></a>
 						</button>
 						</h6>
 						<input type="text" class="itemId" name="itemId" value="<%=lightPrdctsList.get(i).getItemId() %>">
 						<p>
-							<em class="item_price">$<%=lightPrdctsList.get(i).getPrice()%></em>
+							<b>$<input size="5" type="text" style="border:0;background:white" class="item_price price" name="price" value="<%=lightPrdctsList.get(i).getPrice()%>"/></b>
 						</p>
-						<%if (consumerList.get(i).getRemainingQuantity()>0){ %>
-							<a href="#" data-text="Add To Cart" class="but-hover1 item_add">Add To Cart</a>
-						<% } %>
+						<%if (lightPrdctsList.get(i).getRemainingQuantity()>0 && session != null){ %>
+						<button class="btn item_add addToCartForm" onclick="form.action='AddToCartControllerServlet';">
+						Add To Cart
+						</button>
+						<% }%>
 					</div>
 					</form>
 				</div>
