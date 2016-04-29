@@ -87,14 +87,14 @@
 					<div class="login-mail">
 						<input type="text" placeholder="Name*" name="name" required="" value=<%=registerBean.getName() %> >
 					</div>
-					Date of Birth:
-					<div id="bdate" class="datefield">
-					<input id="year" type="tel" maxlength="4" name="year" placeholder="YYYY" required="" value="1990" /> /
-				    <input id="month" type="tel" maxlength="2" name="day" placeholder="DD" required="" value="11"  /> /
-				    <input id="day" type="tel" maxlength="2" name="month" placeholder="MM" required="" value=12 />
+<!-- 					Date of Birth: -->
+<!-- 					<div id="bdate" class="datefield"> -->
+					<input id="year" type="hidden" maxlength="4" name="year" placeholder="YYYY" required="" value="1990" /> 
+				    <input id="month" type="hidden" maxlength="2" name="day" placeholder="DD" required="" value="11"  /> 
+				    <input id="day" type="hidden" maxlength="2" name="month" placeholder="MM" required="" value=12 />
 						
-					</div>
-					<br />
+<!-- 					</div> -->
+<!-- 					<br /> -->
 					<br />
 					<div class="login-mail">
 						<input type="text" placeholder="Email*" name="email" required="" value=<%=registerBean.getEmail() %> 

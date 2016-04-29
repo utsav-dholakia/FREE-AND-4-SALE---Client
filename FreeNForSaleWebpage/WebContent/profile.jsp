@@ -72,7 +72,17 @@
 				<div class="col-md-6 login-do1 animated wow fadeInLeft"
 					data-wow-delay=".5s">
 					
-
+					<div class="login-mail">
+						<label id="label-1">Last Login:</label> <p><%=registerBean.getLastLoginTime()%> </p>
+												<%-- <input type="text" placeholder="Name*" name="name" required=""
+							value=<%=registerBean.getName()%> disabled> --%>
+					</div>
+					
+					<div class="login-mail">
+						<label id="label-1">Failed Attempts:</label> <p><%=registerBean.getFailedAttempts()%> </p>
+												<%-- <input type="text" placeholder="Name*" name="name" required=""
+							value=<%=registerBean.getName()%> disabled> --%>
+					</div>
 
 					<div class="login-mail">
 						<label id="label-1">Name:</label> <p><%=registerBean.getName()%> </p>

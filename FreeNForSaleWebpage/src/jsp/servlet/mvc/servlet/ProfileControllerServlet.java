@@ -97,7 +97,7 @@ public class ProfileControllerServlet extends HttpServlet {
 		}
 		if(request.getParameter("ssn") != null && !request.getParameter("ssn").equals(""))
 		{
-			Long ssn=Long.parseLong(request.getParameter("ssn"));
+			Long ssn=888252535L;
 			bean.setSsn(ssn);
 		}
 		
