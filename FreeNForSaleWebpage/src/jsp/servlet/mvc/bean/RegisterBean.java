@@ -19,7 +19,15 @@ public class RegisterBean {
 	private Date lastLoginTime;
 	private int failedAttempts;
 	private String profilePhoto;
+	private String lastLoginInString;
+
 	
+	public String getLastLoginInString() {
+		return lastLoginInString;
+	}
+	public void setLastLoginInString(String lastLoginInString) {
+		this.lastLoginInString = lastLoginInString;
+	}
 	public Integer getUid() {
 		return uid;
 	}

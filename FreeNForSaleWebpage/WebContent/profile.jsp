@@ -73,7 +73,7 @@
 					data-wow-delay=".5s">
 					
 					<div class="login-mail">
-						<label id="label-1">Last Login:</label> <p><%=registerBean.getLastLoginTime()%> </p>
+						<label id="label-1">Last Login:</label> <p><%=registerBean.getLastLoginInString()%> </p>
 												<%-- <input type="text" placeholder="Name*" name="name" required=""
 							value=<%=registerBean.getName()%> disabled> --%>
 					</div>
