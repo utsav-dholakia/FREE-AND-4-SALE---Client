@@ -98,7 +98,7 @@ ArrayList<InventoryBean> iBeans = (ArrayList<InventoryBean>)request.getAttribute
 								<div class="women">
 									<h6>
 									<button class="btn singleItemForm" onclick="form.action='SingleItemControllerServlet';">
-										<a href="single.jsp" name="inventoryName"><%=iBeans.get(i).getInventoryName() %></a>
+										<a href="single.jsp" class="inventoryName" name="inventoryName"><%=iBeans.get(i).getInventoryName() %></a>
 									</button>
 									</h6>
 									<input type="text" class="itemId" name="itemId" value="<%=iBeans.get(i).getItemId() %>">
