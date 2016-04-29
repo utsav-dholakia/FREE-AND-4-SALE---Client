@@ -19,6 +19,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 
 import jsp.servlet.mvc.bean.CartBean;
 import jsp.servlet.mvc.bean.ReviewBean;
@@ -54,6 +55,7 @@ public class ReviewControllerServlet extends HttpServlet {
 			bean.setUserId(Integer.parseInt(session.getAttribute("UID").toString()));
 			
 			Client client = Client.create();
+			client.addFilter(new LoggingFilter());
 			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/ReviewServices/getReviews");
 			
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")

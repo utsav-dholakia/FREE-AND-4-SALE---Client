@@ -16,7 +16,8 @@
 	<%@page import= "com.sun.jersey.api.client.WebResource" %>
 	<%@page import= "javax.ws.rs.core.MediaType" %>
 	<%@page import= "java.util.HashMap" %>
-
+	<%@page import= "com.sun.jersey.api.client.filter.LoggingFilter" %>
+					 
 	<%	
 	List<ReviewBean> reviews = new ArrayList<ReviewBean>();
 	int size = Integer.parseInt(session.getAttribute("size").toString()); 
@@ -36,6 +37,7 @@
 	try {
 		
 		Client client = Client.create();
+		client.addFilter(new LoggingFilter());
 		WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/ReviewServices/saveReviews");
 		
 		ClientResponse restResponse = webResource.header("secretKey", "1234567890")

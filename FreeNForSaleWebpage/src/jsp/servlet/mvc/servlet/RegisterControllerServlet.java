@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 
 import jsp.servlet.mvc.bean.RegisterBean;
 import jsp.servlet.mvc.bean.LoginBean;
@@ -110,6 +111,7 @@ public class RegisterControllerServlet extends HttpServlet {
 		try {
 			
 			Client client = Client.create();
+			client.addFilter(new LoggingFilter());
 			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/registrationservices/newregistration");
 			
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")

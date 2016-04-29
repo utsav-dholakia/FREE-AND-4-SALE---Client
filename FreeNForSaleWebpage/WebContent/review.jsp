@@ -16,6 +16,7 @@
 	<%@page import= "com.sun.jersey.api.client.WebResource" %>
 	<%@page import= "javax.ws.rs.core.MediaType" %>
 	<%@page import= "java.util.HashMap" %>
+	<%@page import= "com.sun.jersey.api.client.filter.LoggingFilter" %>
 
 	<%	Boolean status = true;
 		CartBean bean = new CartBean();
@@ -26,6 +27,7 @@
 		try {
 
 			Client client = Client.create();
+			client.addFilter(new LoggingFilter());
 			WebResource webResource = client
 					.resource("https://localhost:8443/FreeNForSaleServices/rest/ReviewServices/getReviews");
 
