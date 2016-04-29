@@ -16,8 +16,8 @@
 <!--banner-->
 <div class="banner-top">
 	<div class="container">
-		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Single</h2>
-		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index2.jsp" id="gotoHomePage">Home</a><label>/</label>Single</h3>
+		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Product Details</h2>
+		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index2.jsp" id="gotoHomePage">Home</a><label>/</label>Product</h3>
 		<div class="clearfix"> </div>
 	</div>
 </div>
@@ -141,8 +141,8 @@
 			  			<% if(iBeans.getAllImages() != null)
 			  			{
 			  				for(int i = 0; i < images.size(); i++ ) { %>
-			    			<li data-thumb="<% images.get(i); %>">
-			        			<div class="thumb-image"> <img src="<% images.get(i); %>" data-imagezoom="true" class="img-responsive"> </div>
+			    			<li data-thumb="<%=images.get(i)%>">
+			        			<div class="thumb-image"> <img src="<%=images.get(i) %>" data-imagezoom="true" class="img-responsive"> </div>
 			    			</li> 
 			  				<%} 
 			  			}%>

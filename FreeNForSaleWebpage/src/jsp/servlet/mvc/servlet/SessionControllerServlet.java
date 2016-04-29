@@ -1,7 +1,6 @@
 package jsp.servlet.mvc.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 
 import jsp.servlet.mvc.bean.LoginBean;
 
@@ -53,6 +53,7 @@ public class SessionControllerServlet extends HttpServlet {
 		try {
 			
 			Client client = Client.create();
+			client.addFilter(new LoggingFilter());
 			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/loginservices/checkuservalidity");
 			
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")
@@ -82,7 +83,7 @@ public class SessionControllerServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("UID", statusString);
 			session.setAttribute("USER", name);
-			System.out.println("redirecting to inventorycontroller");
+			System.out.println("redirecting to index2.jsp");
 			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
 			rd.forward(request, response);
 		}

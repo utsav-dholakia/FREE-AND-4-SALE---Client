@@ -12,6 +12,7 @@
 	<%@page import= "com.sun.jersey.api.client.WebResource" %>
 	<%@page import= "javax.ws.rs.core.MediaType" %>
 	<%@page import= "java.util.HashMap" %>
+	<%@page import="com.sun.jersey.api.client.filter.LoggingFilter"%>
 	
 	<!-- banner -->
 	<div class="banner">
@@ -22,6 +23,7 @@ Map<Integer,ArrayList<InventoryBean>> iBeans = new HashMap();
 try {
 	
 	Client client = Client.create();
+	client.addFilter(new LoggingFilter());
 	WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/InventoryServices/InventoryForHomePage");
 	
 	ClientResponse restResponse = webResource.header("secretKey", "1234567890")
@@ -47,6 +49,20 @@ try {
 <%	 		
 ArrayList<InventoryBean> featuredList=iBeans.get(1);
 %>
+<script>
+	$(document).ready(function(){
+		$(".singleItemForm").on("click",function(){
+			console.log("submitting singleItemForm");
+			$(this).parent().parent().action = "SingleItemController"; //Trigger action
+			$(this).parent().parent().submit();
+		});
+		$(".addToCartForm").on("click",function(){
+			console.log("submitting addToCartForm");
+			$(this).parent().parent().action = "AddToCartControllerServlet"; //Trigger action
+			$(this).parent().parent().submit();
+		});
+	});
+</script>	
 		
 		<div class="banner-right">
 			<ul id="flexiselDemo2">
@@ -55,21 +71,26 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 				<div class="banner-grid">
 					<h2>Heavy Products</h2>
 					<div class="wome">
-						<a href="single.jsp"><img class="img-responsive"
-							src="<%=featuredList.get(i).getMainImage()%>" alt="" /> </a>
+						<img class="img-responsive"
+							src="<%=featuredList.get(i).getMainImage()%>" alt=""/>
+						<form method="post">
 						<div class="women simpleCart_shelfItem">
-							<a href="#"><img src="images/ll.png" alt=""></a>
 							<h6>
-								<a href="single.jsp"><%=featuredList.get(i).getInventoryName() %></a>
+							<button class="btn singleItemForm">
+								<a href="single.jsp" name="inventoryName"><%=featuredList.get(i).getInventoryName() %></a>
+							</button>
 							</h6>
+							<input type="text" class="itemId" name="itemId" value="<%=featuredList.get(i).getItemId() %>">
 							<p class="ba-price">
-								<em class="item_price">$<%=featuredList.get(i).getPrice()%></em>
+								<em class="item_price" name="price">$<%=featuredList.get(i).getPrice()%></em>
 							</p>
 							<%if (featuredList.get(i).getRemainingQuantity()>0){ %>
-							<a href="#" data-text="Add To Cart" class="but-hover1 item_add">Add
-								To Cart</a>
+							<button class="btn item_add addToCartForm">
+								Add To Cart
+							</button>
 							<%} %>
 						</div>
+						</form>
 					</div>
 				</div>
 				</li>
@@ -99,7 +120,7 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 				}
 			}
 		});
-
+		$(".itemId").hide();
 	});
 </script>
 <script type="text/javascript" src="js/jquery.flexisel.js"></script>
@@ -115,12 +136,11 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 	<div class="content-top">
 		<div class="col-md-5 col-md1 animated wow fadeInLeft" data-wow-delay=".1s">
 			<div class="col-3">
-				<a href="single.jsp"><img src="images/consumer.png" class="img-responsive " alt="">
+				<img src="images/consumer.png" class="img-responsive " alt="">
 					<div class="col-pic">
 						<h5>Consumer Goods</h5>
 						<p>Clothing,Cosmetics, Shoes & Jwelery  </p>
 					</div>
-				</a>
 			</div>
 		</div>
 		<div class="col-md-7 col-md2 animated wow fadeInRight" data-wow-delay=".1s">
@@ -130,21 +150,19 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 			<div class="grid-pro">
 				<div class=" grid-product ">
 					<figure>
-						<a href="single.jsp">
-							<div class="grid-img">
-								<img src="<%= consumerList.get(i).getMainImage()%>" class="img-responsive" alt="">
-							</div>
-							<!-- <div class="grid-img">
-								<img src="images/pr.jpg" class="img-responsive" alt="">
-							</div> -->
-						</a>
+						<div class="grid-img">
+							<img src="<%= consumerList.get(i).getMainImage()%>" class="img-responsive" alt="">
+						</div>
 					</figure>
 				</div>
+				<form action="SingleItemControllerServlet" method="post">
 				<div class="women">
-						<a href="#"><img src="images/ll.png" alt=""></a>
 						<h6>
+						<button type="submit" class="btn">
 							<a href="single.jsp"><%=consumerList.get(i).getInventoryName() %></a>
+						</button>
 						</h6>
+						<input type="text" class="itemId" name="itemId" value="<%=consumerList.get(i).getItemId() %>">
 						<p>
 							<em class="item_price">$<%=consumerList.get(i).getPrice()%></em>
 						</p>
@@ -154,6 +172,7 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 								<em class="item_price">Out of Stock</em>
 							<%} %>
 				</div>
+				</form>
 			</div>
 		</div>
 	<% } %>
@@ -163,7 +182,7 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 	</div>
 	<!----->
 	<!---->
-	<div class="content-top">
+	 <div class="content-top">
 		<div class="col-md-7 col-md2 animated wow fadeInLeft" data-wow-delay=".1s">
 <%ArrayList<InventoryBean> lightPrdctsList=iBeans.get(3);
 	for (int i=0; i<lightPrdctsList.size(); i++) {%>
@@ -171,43 +190,42 @@ ArrayList<InventoryBean> featuredList=iBeans.get(1);
 				<div class="grid-pro">
 					<div class=" grid-product ">
 						<figure>
-							<a href="single.jsp">
-								<div class="grid-img">
-									<img src="<%=lightPrdctsList.get(i).getMainImage()%>" class="img-responsive" alt="">
-								</div>
-								<!-- <div class="grid-img">
-									<img src="images/pr7.jpg" class="img-responsive" alt="">
-								</div> -->
-							</a>
+							<div class="grid-img">
+								<img src="<%=lightPrdctsList.get(i).getMainImage()%>" class="img-responsive" alt="">
+							</div>
 						</figure>
 					</div>
+					<form action="SingleItemControllerServlet" method="post">
 					<div class="women">
-						<a href="#"><img src="images/ll.png" alt=""></a>
 						<h6>
+						<button type="submit" class="btn">
 							<a href="single.jsp"><%=lightPrdctsList.get(i).getInventoryName() %></a>
+						</button>
 						</h6>
+						<input type="text" class="itemId" name="itemId" value="<%=lightPrdctsList.get(i).getItemId() %>">
 						<p>
-							<em class="item_price"><%=lightPrdctsList.get(i).getPrice()%></em>
+							<em class="item_price">$<%=lightPrdctsList.get(i).getPrice()%></em>
 						</p>
 						<%if (consumerList.get(i).getRemainingQuantity()>0){ %>
 							<a href="#" data-text="Add To Cart" class="but-hover1 item_add">Add To Cart</a>
 						<% } %>
 					</div>
+					</form>
 				</div>
 			</div>
-	<% } %>
+	<% } %> 
 	
 		<div class="clearfix"></div>
 		</div>
 		<div class="col-md-5 col-md1 animated wow fadeInRight"
 			data-wow-delay=".1s">
 			<div class="col-3">
-				<a href="single.jsp"><img src="images/pi2.jpg" class="img-responsive " alt="">
+				<img src="images/pi2.jpg" class="img-responsive " alt="">
 					<div class="col-pic">
 						<h5>Small Products</h5>
 						<p>Books, Promotions and others</p>
 					</div>
-				</a>
+				
 			</div>
 		</div>
 		<div class="clearfix"></div>

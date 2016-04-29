@@ -2,7 +2,6 @@ package jsp.servlet.mvc.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,13 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 
 import jsp.servlet.mvc.bean.InventoryBean;
 import jsp.servlet.mvc.bean.LoginBean;
@@ -51,6 +50,7 @@ public class SearchControllerServlet extends HttpServlet {
 		try {
 			
 			Client client = Client.create();
+			client.addFilter(new LoggingFilter());
 			WebResource webResource = client.resource("https://localhost:8443/FreeNForSaleServices/rest/InventoryServices/SearchInventory");
 			
 			ClientResponse restResponse = webResource.header("secretKey", "1234567890")

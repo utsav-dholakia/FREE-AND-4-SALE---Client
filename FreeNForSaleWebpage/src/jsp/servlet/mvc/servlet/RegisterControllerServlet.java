@@ -134,9 +134,11 @@ public class RegisterControllerServlet extends HttpServlet {
 		
 		if(status)
 		{
+			System.out.println("UID :" + statusString);
 			HttpSession session = request.getSession();
 			session.setAttribute("UID", statusString);
 			session.setAttribute("USER", name);
+			System.out.println("redirecting to index2.jsp");
 			RequestDispatcher rd=request.getRequestDispatcher("index2.jsp");
 			rd.forward(request, response);
 		}
