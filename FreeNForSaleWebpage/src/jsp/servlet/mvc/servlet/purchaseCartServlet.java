@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.event.CaretListener;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.client.Client;
@@ -55,20 +56,38 @@ public class purchaseCartServlet extends HttpServlet {
 			
 			UpdateCartBean bean = new UpdateCartBean();
 			HttpSession session=request.getSession();
-			bean.setRemoveItems((List<Integer>)session.getAttribute("removeList"));
-			System.out.println("Remove Items: " + bean.getRemoveItems().size());
+			//bean.setRemoveItems((List<Integer>)session.getAttribute("removeList"));
+			List<CartBean> orgCList=(List<CartBean>)session.getAttribute("cartList");
+		//	System.out.println("Remove Items: " + bean.getRemoveItems().size());
 			int size= Integer.valueOf(request.getParameter("size"));
 			System.out.println("Size of ArrayList " + size);
 			List<CartBean> clist=new ArrayList<CartBean>();
-			for(int i=0;i<size;i++){
-				CartBean cb=new CartBean();
-				cb.setAmount(request.getParameter("totalAmount"+i));
-				System.out.println("AMount" + cb.getAmount());
-				cb.setQuantity(Integer.parseInt(request.getParameter("quantity"+i)));
-				cb.setUserId(Integer.parseInt(request.getParameter("UId")));
-				cb.setInventoryId(Integer.parseInt(request.getParameter("itemId"+i)));
-				cb.setSellerId(Integer.parseInt(request.getParameter("sellerId"+i)));
-				clist.add(cb);
+			//List<Integer> removeList= new ArrayList<Integer>();
+			List<Integer> tempList2= new ArrayList<Integer>();
+
+			for(int i=0;i<size-1;i++){
+				if(request.getParameter("itemId"+i)!=null){
+					CartBean cb=new CartBean();
+					cb.setAmount((String)request.getParameter("totalAmount"+i));
+					System.out.println("AMount" + cb.getAmount());
+					cb.setQuantity(Integer.parseInt(request.getParameter("quantity"+i)));
+					cb.setUserId(Integer.parseInt(request.getParameter("UId")));
+					cb.setInventoryId(Integer.parseInt(request.getParameter("itemId"+i)));
+					cb.setSellerId(Integer.parseInt(request.getParameter("sellerId"+i)));
+					clist.add(cb);
+					tempList2.add(cb.getInventoryId());
+				}
+				
+			}
+			List<Integer> tempList= new ArrayList<Integer>();
+			for(CartBean o :  orgCList ){
+				tempList.add(o.getInventoryId());
+			}
+			
+			tempList.removeAll(tempList2);
+			bean.setRemoveItems(tempList);
+			for(Integer i: bean.getRemoveItems()){
+				System.out.println("Removed invntry: " + i );
 			}
 			
 			bean.setPaymentType("Cash");

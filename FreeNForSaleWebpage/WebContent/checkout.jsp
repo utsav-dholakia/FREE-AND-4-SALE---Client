@@ -52,6 +52,7 @@ try {
 	cartList = restResponse.getEntity(new GenericType<List<ViewCartBean>>(){});
 	System.out.println(cartList.get(0).getItemName());
 	request.setAttribute("cartList",cartList);
+	session.setAttribute("cartList", cartList);
 	size=cartList.size();
 	System.out.println("initial size = " +size);
 	System.out.println("RemoveList size = " +removeList.size());
@@ -81,37 +82,34 @@ try {
 			<th class="t-head">Quantity</th>
 			<th class="t-head">Total</th>
 		  </tr>
-		  <% for(int i = 0 ; i < cartList.size(); i++) { %>
+		  <input type="hidden" name="UId" value="<%=UId%>">
+		  <% for(int i = 0 ; i < cartList.size(); i++) { %>				
+		  
 		  <tr class="cross">
 			<td class="ring-in t-data">
 				<img src="<%=cartList.get(i).getImage() %>" class="img" style="display:inline;" alt="<%=cartList.get(i).getItemName() %>" width="150" height="150">
 				<div class="sed" style="max-width:60%;display:inline;">
 					<h5><%=cartList.get(i).getItemName() %></h5>
 				</div>
-				<input type="hidden" name="UId" value="<%=UId%>">
 				<input type="hidden" name="itemId<%=i%>" value="<%=cartList.get(i).getInventoryId()%>">
 				<input type="hidden" name="sellerId<%=i%>" value="<%=cartList.get(i).getSellerId()%>">
 				<script>
 		$(document).ready(function(c) {
-		function removeItem(){
+			$('.removeItem').on('click', function(c){
 		
-			<%
-			size--;
-			removeList.add(cartList.get(i).getInventoryId());
-			out.println("delete button clicked");
-			%>
+			
 			console.log("delete button clicked");
 			$(this).parents('.cross').fadeOut('slow', function(c){
 				console.log("fade out complete");
 				$(this).parents('.cross').remove();
 			});
 		
-		};
+		});
 	});
 	
-</script>				<input type="hidden" name="size" value="<%=size%>"> <%session.setAttribute("removeList", removeList); %>
+</script>				<input type="hidden" name="size" value="<%=size%>"> 
 
-				<div><button type="button" onclick="removeItem()" class="btn-primary removeItem" >Remove Item</button></div>
+				<div><a class="btn-primary removeItem" >Remove Item</a></div>
 				<div class="clearfix"> </div>	
 			 </td>
 <script>
@@ -158,7 +156,7 @@ $(document).ready(function(){
 					</div>
 				</div>			
 			</td><%float x=Float.parseFloat(cartList.get(i).getAmount())*cartList.get(i).getQuantity(); %>
-			<td class="t-data " > <input style="border:0; background: white;" class="calculateTotal" id="calculateTotal<%=i %>" name="totalAmount"<%=i %> value="<%=x %>" /> 
+			<td class="t-data " > <input type="text" style="border:0; background: white;" class="calculateTotal" id="calculateTotal<%=i %>" name="totalAmount<%=i%>" value="<%=x %>" /> 
 			</td>
 			
 		  </tr>
